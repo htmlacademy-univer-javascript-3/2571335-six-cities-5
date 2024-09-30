@@ -1,4 +1,3 @@
-import React from 'react';
 import MainPageCards from './MainPageCards.tsx';
 import MainPage from './MainPage.tsx';
 
