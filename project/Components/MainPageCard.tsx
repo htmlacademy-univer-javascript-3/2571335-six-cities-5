@@ -1,25 +1,21 @@
-type MainPageCardsProps={
-    premium:boolean;
-    img:string;
-    price:number;
-    apartsmentType:string;
-    description:string
-}
-function MainPageCards({premium, img, price, apartsmentType, description}:MainPageCardsProps):JSX.Element{
+import {mainPageTypes} from '../../src/index.tsx';
+
+
+function MainPageCard(MainPageCardProps:mainPageTypes):JSX.Element{
     return(
     <article className="cities__card place-card">
-                  <div className="place-card__mark">
-                    <span>{'Premium'&&premium}</span>
-                  </div>
+                  {MainPageCardProps.premium?<div className="place-card__mark">
+                    <span>Premium</span>
+                  </div>:null}
                   <div className="cities__image-wrapper place-card__image-wrapper">
                     <a href="#">
-                      <img className="place-card__image" src={img} width="260" height="200" alt="Place image"/>
+                      <img className="place-card__image" src={MainPageCardProps.img} width="260" height="200" alt="Place image"/>
                     </a>
                   </div>
                   <div className="place-card__info">
                     <div className="place-card__price-wrapper">
                       <div className="place-card__price">
-                        <b className="place-card__price-value">&euro;{price}</b>
+                        <b className="place-card__price-value">&euro;{MainPageCardProps.price}</b>
                         <span className="place-card__price-text">&#47;&nbsp;night</span>
                       </div>
                       <button className="place-card__bookmark-button button" type="button">
@@ -36,10 +32,10 @@ function MainPageCards({premium, img, price, apartsmentType, description}:MainPa
                       </div>
                     </div>
                     <h2 className="place-card__name">
-                      <a href="#">{description}</a>
+                      <a href="#">{MainPageCardProps.description}</a>
                     </h2>
-                    <p className="place-card__type">{apartsmentType}</p>
+                    <p className="place-card__type">{MainPageCardProps.apartsmentType}</p>
                   </div>
                 </article>);
 }
-export default MainPageCards;
+export default MainPageCard;

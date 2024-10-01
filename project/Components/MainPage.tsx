@@ -1,11 +1,7 @@
-import React from 'react';
+import MainPageCard from './MainPageCard.tsx';
+import {mainPageTypes} from '../../src/index.tsx';
 
-type MainPageProps={
-    numberOfPlaces:number;
-    children: React.ReactNode; 
-
-}
-function MainPage({numberOfPlaces, children}:MainPageProps):JSX.Element{
+function MainPage({ MainPageCardProps }: { MainPageCardProps: mainPageTypes[] }):JSX.Element{
     return(
     <div className="page page--gray page--main">
       <header className="header">
@@ -79,7 +75,7 @@ function MainPage({numberOfPlaces, children}:MainPageProps):JSX.Element{
           <div className="cities__places-container container">
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
-              <b className="places__found">{numberOfPlaces} places to stay in Amsterdam</b>
+              <b className="places__found">{MainPageCardProps[0].numberOfPlaces} places to stay in Amsterdam</b>
               <form className="places__sorting" action="#" method="get">
                 <span className="places__sorting-caption">Sort by</span>
                 <span className="places__sorting-type" tabIndex={0}>
@@ -96,7 +92,10 @@ function MainPage({numberOfPlaces, children}:MainPageProps):JSX.Element{
                 </ul>
               </form>
               <div className="cities__places-list places__list tabs__content">
-                {children}
+                <MainPageCard {...MainPageCardProps[0]}/>
+                <MainPageCard {...MainPageCardProps[1]}/>
+                <MainPageCard {...MainPageCardProps[2]}/>
+                <MainPageCard {...MainPageCardProps[3]}/>
               </div>
             </section>
             <div className="cities__right-section">

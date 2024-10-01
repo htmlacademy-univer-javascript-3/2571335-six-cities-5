@@ -1,34 +1,66 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from '../project/Components/App.jsx';
-
-
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
-const props = {
-  premium:[true,false,false,true,false],
-  price:[120,80,132,180,80],
-  img:[
-    '../markup/img/apartment-01.jpg',
-    '../markup/img/room.jpg',
-    '../markup/img/apartment-02.jpg',
-    '../markup/img/apartment-03.jpg',
-    '../markup/img/room.jpg'
-  ],
-  apartsmentType:['Apartment', 'Room', 'Apartment', 'Apartment', 'Room'],
-  description:[
-    'Beautiful &amp; luxurious apartment at great location',
-    'Wood and stone place',
-    'Canal View Prinsengracht',
-    'Nice, cozy, warm big bed apartment',
-    'Wood and stone place'
-  ],
-  numberOfPlaces:132
+
+
+type mainPageTypes={
+  premium:boolean;
+  price:number;
+  img:string;
+  apartsmentType:string;
+  description:string;
+  numberOfPlaces?:number;
 };
+export type {mainPageTypes};
+
+const mainPageCardInfo:mainPageTypes[] = [
+  {
+    premium:true,
+    price:120,
+    img:'../markup/img/apartment-01.jpg',
+    apartsmentType:'Apartment',
+    description:'Beautiful &amp; luxurious apartment at great location',
+    numberOfPlaces:132
+  },
+  {
+    premium:false,
+    price:80,
+    img:'../markup/img/room.jpg',
+    apartsmentType:'Room',
+    description:'Wood and stone place',
+  },
+
+  {
+    premium:false,
+    price:132,
+    img:'../markup/img/apartment-02.jpg',
+    apartsmentType:'Apartment',
+    description:'Canal View Prinsengracht',
+  },
+
+  {
+    premium:true,
+    price:180,
+    img:'../markup/img/apartment-03.jpg',
+    apartsmentType:'Apartment',
+    description:'Nice, cozy, warm big bed apartment',
+  },
+
+  {
+    premium:false,
+    price:80,
+    img:'../markup/img/room.jpg',
+    apartsmentType:'Room',
+    description:'Wood and stone place',
+  }];
+export default {mainPageCardInfo} ;
+
 
 root.render(
   <React.StrictMode>
-    <App premium = {props.premium} price = {props.price} img = {props.img} apartsmentType = {props.apartsmentType} description = {props.description} numberOfPlaces = {props.numberOfPlaces}/>
+    <App MainPageCardProps={mainPageCardInfo}/>
   </React.StrictMode>
 );

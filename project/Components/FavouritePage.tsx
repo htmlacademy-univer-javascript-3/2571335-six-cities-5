@@ -1,4 +1,4 @@
-function Favourites():JSX.Element{
+function FavouritePage():JSX.Element{
     return (
 
         <div className="page">

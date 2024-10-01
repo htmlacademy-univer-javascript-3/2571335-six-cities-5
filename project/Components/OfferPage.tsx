@@ -1,4 +1,4 @@
-function offer():JSX.Element{
+function OfferPage():JSX.Element{
     return (
         
     <div className="page">
