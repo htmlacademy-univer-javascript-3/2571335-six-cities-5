@@ -1,6 +1,6 @@
 function LoginPage():JSX.Element{
     return(
-        
+
     <div className="page page--gray page--login">
     <header className="header">
       <div className="container">
@@ -42,3 +42,4 @@ function LoginPage():JSX.Element{
   </div>
     )
 }
+export default LoginPage;
