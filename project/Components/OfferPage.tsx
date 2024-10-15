@@ -1,6 +1,6 @@
 function OfferPage():JSX.Element{
     return (
-        
+
     <div className="page">
     <header className="header">
       <div className="container">
@@ -337,3 +337,4 @@ function OfferPage():JSX.Element{
 
     )
 }
+export default OfferPage;
