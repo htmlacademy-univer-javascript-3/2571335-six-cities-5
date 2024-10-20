@@ -16,7 +16,8 @@ function App({ MainPageCardProps, guestReview, offer } : { MainPageCardProps: ma
             <Routes>
                 <Route
                     path = {AppRoute.Main}
-                    element = {<MainPage MainPageCardProps={MainPageCardProps} offer={offer}/>}
+                    element = {<MainPage MainPageCardProps={MainPageCardProps} offer={offer}/>
+                }
                 />
                 <Route
                     path = {AppRoute.Login}

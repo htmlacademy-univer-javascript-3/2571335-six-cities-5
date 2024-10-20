@@ -1,12 +1,21 @@
 import { OfferDescription } from '../../src/types/offerDescription.ts';
 import {useState} from 'react';
 import { Link } from 'react-router-dom';
+type CardIdProps = {onAnswer: (cardId:string) => void}
 
-function MainPageCard(offer:OfferDescription):JSX.Element{
-    const [cardId, setCardId] = useState(0);
+type MainPageCardProps = {
+  offer: OfferDescription;
+} & CardIdProps;
 
+function MainPageCard({ offer, onAnswer }: MainPageCardProps): JSX.Element {
+  const [cardId, setCardId] = useState('0');
     return(
-      <article className="cities__card place-card" onMouseEnter={() => setCardId(offer.id)}>
+      <article className="cities__card place-card"
+      onMouseEnter={() =>{
+        setCardId(offer.id);
+        onAnswer(cardId);
+      }
+      }>
       {offer.isPremium?<div className="place-card__mark">
         <span>Premium</span>
       </div>:null}

@@ -149,7 +149,11 @@ function OfferPage({ offer, guestReview}: {offer:OfferDescription[],guestReview:
                 )}
 
               </ul>
-              <ReviewForm/>
+              <ReviewForm
+              onAnswer={() => {
+                throw new Error('Function \'onAnswer\' isn\'t implemented.');
+              }}
+              />
             </section>
 
           </div>

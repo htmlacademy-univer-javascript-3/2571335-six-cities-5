@@ -1,13 +1,18 @@
 import React, { useState } from "react";
-function ReviewForm(){
+
+type ReviewProps = {onAnswer: (raiting?:string,review?:string) => void}
+
+function ReviewForm({onAnswer}:ReviewProps){
   const [rating, setRatingStar] = useState<string>("");
   const [review, setReview] = useState<string>("");
   const handleRatingChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setRatingStar(event.target.value);
+    onAnswer(rating);
   };
 
   const handleReviewChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     setReview(event.target.value);
+    onAnswer(review);
   };
     return(
   <form className="reviews__form form" action="#" method="post">
