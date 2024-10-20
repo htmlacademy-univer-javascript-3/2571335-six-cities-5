@@ -1,7 +1,10 @@
-import MainPageCard from './MainPageCard.tsx';
+import OfferList from './OfferList.tsx';
 import {mainPageTypes} from '../../src/index.tsx';
+import { OfferDescription } from '../../src/types/offerDescription.ts';
+import {Link} from 'react-router-dom';
 
-function MainPage({ MainPageCardProps }: { MainPageCardProps: mainPageTypes[] }):JSX.Element{
+
+function MainPage({ MainPageCardProps, offer }: { MainPageCardProps: mainPageTypes, offer:OfferDescription[] }):JSX.Element{
     return(
     <div className="page page--gray page--main">
       <header className="header">
@@ -9,7 +12,9 @@ function MainPage({ MainPageCardProps }: { MainPageCardProps: mainPageTypes[] })
           <div className="header__wrapper">
             <div className="header__left">
               <a className="header__logo-link header__logo-link--active">
+                <Link to = "/">
                 <img className="header__logo" src="img/logo.svg" alt="6 cities logo" width="81" height="41"/>
+                </Link>
               </a>
             </div>
             <nav className="header__nav">
@@ -75,7 +80,7 @@ function MainPage({ MainPageCardProps }: { MainPageCardProps: mainPageTypes[] })
           <div className="cities__places-container container">
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
-              <b className="places__found">{MainPageCardProps[0].numberOfPlaces} places to stay in Amsterdam</b>
+              <b className="places__found">{MainPageCardProps.numberOfPlaces} places to stay in Amsterdam</b>
               <form className="places__sorting" action="#" method="get">
                 <span className="places__sorting-caption">Sort by</span>
                 <span className="places__sorting-type" tabIndex={0}>
@@ -92,10 +97,9 @@ function MainPage({ MainPageCardProps }: { MainPageCardProps: mainPageTypes[] })
                 </ul>
               </form>
               <div className="cities__places-list places__list tabs__content">
-                <MainPageCard {...MainPageCardProps[0]}/>
-                <MainPageCard {...MainPageCardProps[1]}/>
-                <MainPageCard {...MainPageCardProps[2]}/>
-                <MainPageCard {...MainPageCardProps[3]}/>
+
+                <OfferList {...offer}/>
+
               </div>
             </section>
             <div className="cities__right-section">

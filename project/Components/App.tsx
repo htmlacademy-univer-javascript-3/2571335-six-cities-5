@@ -7,16 +7,16 @@ import OfferPage from './OfferPage.tsx';
 import FavouritePage from './FavouritePage.tsx';
 import LoginPage from './LoginPage.tsx';
 import PrivateRoute from './PrivateRoute.tsx';
+import { OfferDescription } from '../../src/types/offerDescription.ts';
+import { review } from '../../src/types/review.ts';
 
-
-function App({ MainPageCardProps }: { MainPageCardProps: mainPageTypes[] }): JSX.Element {
-
+function App({ MainPageCardProps, guestReview, offer } : { MainPageCardProps: mainPageTypes; guestReview: review[]; offer: OfferDescription[] }): JSX.Element {
     return(
         <BrowserRouter>
             <Routes>
                 <Route
                     path = {AppRoute.Main}
-                    element = {<MainPage MainPageCardProps={MainPageCardProps}/>}
+                    element = {<MainPage MainPageCardProps={MainPageCardProps} offer={offer}/>}
                 />
                 <Route
                     path = {AppRoute.Login}
@@ -26,15 +26,17 @@ function App({ MainPageCardProps }: { MainPageCardProps: mainPageTypes[] }): JSX
                     path = {AppRoute.Favourites}
                     element = {
                         <PrivateRoute
-                            authorizationStatus={AuthorizationStatus.NoAuth}
+                            authorizationStatus={AuthorizationStatus.Auth}
                         >
-                            <FavouritePage/>
+                            <FavouritePage
+                            offers = {offer}
+                            />
                         </PrivateRoute>
                 }
                 />
                 <Route
                     path = {AppRoute.Offer}
-                    element = {<OfferPage/>}
+                    element = {<OfferPage offer={offer} guestReview={guestReview}/>}
                 />
                 <Route
                     path = '*'
