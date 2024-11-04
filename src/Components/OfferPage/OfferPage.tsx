@@ -59,8 +59,8 @@ function OfferPage({ offer, guestReview, MapProp}: {offer:OfferDescription[];gue
           <div className="offer__gallery-container container">
             <div className="offer__gallery">
               {filteredOffer[0].images.map((image) => (
-                <div key={image} className="offer__image-wrapper"> {}
-                  <img className="offer__image" src={image} alt="Фото студии"/>
+                <div key={image} className="offer__image-wrapper">
+                  <img className="offer__image" src={image} alt="Фото студии" />
                 </div>
               ))}
             </div>
