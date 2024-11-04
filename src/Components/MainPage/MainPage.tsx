@@ -114,13 +114,13 @@ function MainPage({ MainPageCardProps, offer, MapProps }: { MainPageCardProps: m
               </form>
               <div className="cities__places-list places__list tabs__content">
 
-                <OfferList offer={offer} onListItemHover={handleListItemHover} />
+                <OfferList offer={offer} onListItemHover={handleListItemHover} isMainPage />
 
               </div>
             </section>
             <div className="cities__right-section">
               <section className="cities__map map">
-                <Map city={city} points={points} selectedPoint={selectedPoint} />
+                <Map city={city} points={points} selectedPoint={selectedPoint} height={407.27} width={512} />
               </section>
             </div>
           </div>
