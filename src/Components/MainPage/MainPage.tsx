@@ -1,11 +1,27 @@
-import OfferList from './OfferList.tsx';
-import {mainPageTypes} from '../../src/index.tsx';
-import { OfferDescription } from '../../src/types/offerDescription.ts';
+import OfferList from '../../Components/OfferList/OfferList.tsx';
+import {mainPageTypes} from '../../index.tsx';
+import { OfferDescription } from '../../types/offerDescription.ts';
 import {Link} from 'react-router-dom';
+import Map from '../Map/Map';
+import {City, Points, Point} from '../../types/points.ts';
+import { useState } from 'react';
+
+export type MapProps = {
+  city: City;
+  points: Points;
+};
 
 
-function MainPage({ MainPageCardProps, offer }: { MainPageCardProps: mainPageTypes, offer:OfferDescription[] }):JSX.Element{
-    return(
+function MainPage({ MainPageCardProps, offer, MapProps }: { MainPageCardProps: mainPageTypes; offer:OfferDescription[]; MapProps:MapProps}):JSX.Element{
+  const {city, points} = MapProps;
+  const [selectedPoint, setSelectedPoint] = useState<Point | undefined>(undefined);
+
+  const handleListItemHover = (listItemId: string) => {
+    const currentPoint = points.find((point) => point.id.toString() === listItemId);
+    setSelectedPoint(currentPoint);
+  };
+
+  return(
     <div className="page page--gray page--main">
       <header className="header">
         <div className="container">
@@ -13,7 +29,7 @@ function MainPage({ MainPageCardProps, offer }: { MainPageCardProps: mainPageTyp
             <div className="header__left">
               <a className="header__logo-link header__logo-link--active">
                 <Link to = "/">
-                <img className="header__logo" src="img/logo.svg" alt="6 cities logo" width="81" height="41"/>
+                  <img className="header__logo" src="img/logo.svg" alt="6 cities logo" width="81" height="41"/>
                 </Link>
               </a>
             </div>
@@ -98,17 +114,19 @@ function MainPage({ MainPageCardProps, offer }: { MainPageCardProps: mainPageTyp
               </form>
               <div className="cities__places-list places__list tabs__content">
 
-                <OfferList {...offer}/>
+                <OfferList offer={offer} onListItemHover={handleListItemHover} />
 
               </div>
             </section>
             <div className="cities__right-section">
-              <section className="cities__map map"></section>
+              <section className="cities__map map">
+                <Map city={city} points={points} selectedPoint={selectedPoint} />
+              </section>
             </div>
           </div>
         </div>
       </main>
     </div>
-    )
+  );
 }
 export default MainPage;

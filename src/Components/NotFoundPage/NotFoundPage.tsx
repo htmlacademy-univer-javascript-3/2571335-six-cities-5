@@ -1,7 +1,7 @@
 import {Link} from 'react-router-dom';
 
 function NotFoundPage():JSX.Element{
-    return(
+  return(
     <div className="page page--gray page--main">
       <header className="header">
         <div className="container">
@@ -69,13 +69,13 @@ function NotFoundPage():JSX.Element{
               </li>
             </ul>
           </section>
-            <h2 style={{ textAlign : 'center'}}>Error 404. Page not found. <Link to = "/"> Back to main page</Link></h2>
-            <div className="cities__right-section">
-              <section className="cities__map map"></section>
-            </div>
+          <h2 style={{ textAlign : 'center'}}>Error 404. Page not found. <Link to = "/"> Back to main page</Link></h2>
+          <div className="cities__right-section">
+            <section className="cities__map map"></section>
           </div>
+        </div>
       </main>
     </div>
-    )
+  );
 }
 export default NotFoundPage;
