@@ -1,8 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import App from '../project/Components/App.jsx';
-import {offer} from '../src/mocks/offer.js';
-import {guestReview} from '../src/mocks/review.js';
+import App from './Components/App/App.tsx';
+import {offer} from './mocks/offer.js';
+import {guestReview} from './mocks/review.js';
 
 
 const root = ReactDOM.createRoot(
