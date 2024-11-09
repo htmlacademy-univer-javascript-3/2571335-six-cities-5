@@ -43,7 +43,7 @@ function App({ MainPageCardProps, guestReview, offer } : { MainPageCardProps: ma
         />
         <Route
           path = {AppRoute.Offer}
-          element = {<OfferPage offer={offer} guestReview={guestReview}/>}
+          element = {<OfferPage offer={offer} guestReview={guestReview} MapProp={MAPPROPS}/>}
         />
         <Route
           path = '*'
