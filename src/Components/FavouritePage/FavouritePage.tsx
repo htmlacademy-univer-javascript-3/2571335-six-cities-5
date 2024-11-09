@@ -1,8 +1,8 @@
-import { OfferDescription } from '../../types/offerDescription';
+import { CityOfferDescription } from '../../types/offerDescription';
 import {Link} from 'react-router-dom';
 
 interface FavouritePageProps {
-  offers: OfferDescription[];
+  offers: CityOfferDescription;
 }
 
 function FavouritePage({ offers }: FavouritePageProps): JSX.Element {
@@ -53,7 +53,7 @@ function FavouritePage({ offers }: FavouritePageProps): JSX.Element {
                   </div>
                 </div>
                 <div className="favorites__places">
-                  {offers.map((offer) => (
+                  {offers.offer.map((offer) => (
                     <div key={offer.id} className="favorites__places">
                       <article className="favorites__card place-card">
                         {offer.isPremium ? (
