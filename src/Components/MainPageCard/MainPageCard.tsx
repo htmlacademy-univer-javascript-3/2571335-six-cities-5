@@ -19,9 +19,15 @@ function MainPageCard({ offer, onAnswer, onListItemHover, isMainPage}: MainPageC
     onListItemHover((offer.id));
     onAnswer(cardId);
   };
+  const handleListItemLeave = (event: MouseEvent<HTMLLIElement>) => {
+    event.preventDefault();
+    setCardId('0');
+    onListItemHover('0');
+  };
   return(
     <article className={isMainPage ? 'cities__card place-card' : 'near-places__card place-card'}
       onMouseEnter={handleListItemHover}
+      onMouseLeave={handleListItemLeave}
     >
       {offer.isPremium ? (
         <div className="place-card__mark">
