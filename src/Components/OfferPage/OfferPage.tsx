@@ -9,14 +9,14 @@ import OfferList from '../../Components/OfferList/OfferList.tsx';
 import Map from '../Map/Map.tsx';
 import {City, Point} from '../../types/points.ts';
 
-function OfferPage({ offer, guestReview, city}: {offer:CityOfferDescription;guestReview:review[];city:City}):JSX.Element{
+function OfferPage({ offers, guestReview, city}: {offers:CityOfferDescription;guestReview:review[];city:City}):JSX.Element{
   const [selectedPoint, setSelectedPoint] = useState<Point | undefined>(undefined);
 
   const { id } = useParams<{ id: string }>();
 
-  const filteredOffer:OfferDescription[] = offer.offer.filter((of) =>(of.id === id));
+  const filteredOffer:OfferDescription[] = offers.offer.filter((of) =>(of.id === id));
   const handleListItemHover = (listItemId: string) => {
-    const currentPoint = offer.offer.find((o) => o.id.toString() === listItemId)?.point;
+    const currentPoint = offers.offer.find((o) => o.id.toString() === listItemId)?.point;
     setSelectedPoint(currentPoint);
   };
   return (
@@ -151,14 +151,14 @@ function OfferPage({ offer, guestReview, city}: {offer:CityOfferDescription;gues
               selectedPoint={selectedPoint}
               height={579}
               width={1144}
-              offer={offer.offer.filter((o) => o.id !== filteredOffer[0].id)}
+              offer={offers.offer.filter((o) => o.id !== filteredOffer[0].id)}
             />
           </section>
         </section>
         <div className="container">
           <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
-            <OfferList offer={offer.offer.filter((of) =>(of.id !== id))} onListItemHover={handleListItemHover} isMainPage = {false} />
+            <OfferList offer={offers.offer.filter((of) =>(of.id !== id))} onListItemHover={handleListItemHover} isMainPage = {false} />
           </section>
         </div>
       </main>

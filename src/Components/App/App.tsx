@@ -38,7 +38,7 @@ function App({ guestReview } : { guestReview: review[]}): JSX.Element {
         />
         <Route
           path = {AppRoute.Offer}
-          element = {<OfferPage offer={offerlist} guestReview={guestReview} city={CITY.filter((o) => o.title === city)[0]}/>}
+          element = {<OfferPage offers={offerlist} guestReview={guestReview} city={CITY.filter((o) => o.title === city)[0]}/>}
         />
         <Route
           path = '*'
