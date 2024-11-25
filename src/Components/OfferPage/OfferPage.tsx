@@ -9,7 +9,7 @@ import OfferList from '../../Components/OfferList/OfferList.tsx';
 import Map from '../Map/Map.tsx';
 import { CITY } from '../../mocks/city.ts';
 
-function OfferPage({ offer, offerList, guestReview, city}: {offer:OfferIdDescription | undefined; offerList:OfferDescription[]; guestReview:review[];city:string}):JSX.Element{
+function OfferPage({ offer, offerList, guestReview, city}: {offer:OfferIdDescription ; offerList:OfferDescription[]; guestReview:review[];city:string}):JSX.Element{
   const [selectedPoint, setSelectedPoint] = useState<OfferDescription | undefined>(undefined);
 
   //const { id } = useParams<{ id: string }>();

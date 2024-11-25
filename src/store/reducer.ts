@@ -2,19 +2,20 @@ import {createReducer} from '@reduxjs/toolkit';
 import {changeCityAction, loadOffer, loadOfferList} from './cityAction';
 import { offerFillAction,setDataLoadingStatus } from './cityAction';
 import { OfferDescription, OfferIdDescription } from '../types/offerDescription';
+import { emptyOffer } from '../mocks/offer';
 
 type InitialOfferState = {
   offerlist : OfferDescription[];
   city: string;
   isDataLoading : boolean;
-  offer: OfferIdDescription | undefined;
+  offer: OfferIdDescription ;
 }
 
 const initialCityState:InitialOfferState = {
   offerlist: [],
   city : 'Paris',
   isDataLoading: false,
-  offer:undefined
+  offer:emptyOffer
 };
 
 const reducer = createReducer(initialCityState, (builder) => {

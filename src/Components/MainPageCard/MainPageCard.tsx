@@ -2,6 +2,8 @@ import { OfferDescription } from '../../types/offerDescription.ts';
 import {useState} from 'react';
 import { Link } from 'react-router-dom';
 import {MouseEvent} from 'react';
+import { fetchOffer } from '../../store/apiActions.ts';
+import { store } from '../../store/index.ts';
 
 type CardIdProps = {onAnswer: (cardId:string) => void}
 
@@ -23,6 +25,11 @@ function MainPageCard({ offer, onAnswer, onListItemHover, isMainPage}: MainPageC
     event.preventDefault();
     setCardId('0');
     onListItemHover('0');
+
+  };
+  const handleOfferIdLoad = (event: MouseEvent<HTMLElement>) => {
+    event.preventDefault();
+    store.dispatch(fetchOffer(offer.id));
   };
   return(
     <article className={isMainPage ? 'cities__card place-card' : 'near-places__card place-card'}
@@ -58,7 +65,9 @@ function MainPageCard({ offer, onAnswer, onListItemHover, isMainPage}: MainPageC
             <span className="visually-hidden">Rating</span>
           </div>
         </div>
-        <h2 className="place-card__name">
+        <h2 className="place-card__name"
+          onClick={handleOfferIdLoad}
+        >
           <Link to={`/offer/${offer.id}`}>{offer.title}</Link>
         </h2>
         <p className="place-card__type">{offer.type}</p>
