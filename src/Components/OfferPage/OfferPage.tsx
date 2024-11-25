@@ -1,22 +1,22 @@
-import { useParams } from 'react-router-dom';
+//import { useParams } from 'react-router-dom';
 import { useState } from 'react';
 import {Link} from 'react-router-dom';
-import { CityOfferDescription, OfferDescription } from '../../types/offerDescription.ts';
+import { OfferDescription, OfferIdDescription } from '../../types/offerDescription.ts';
 import { review } from '../../types/review.ts';
 import ReviewForm from '../../Components/ReviewForm/ReviewForm.tsx';
 import ReviewList from '../ReviewList/ReviewList.tsx';
 import OfferList from '../../Components/OfferList/OfferList.tsx';
 import Map from '../Map/Map.tsx';
-import {City, Point} from '../../types/points.ts';
+import { CITY } from '../../mocks/city.ts';
 
-function OfferPage({ offers, guestReview, city}: {offers:CityOfferDescription;guestReview:review[];city:City}):JSX.Element{
-  const [selectedPoint, setSelectedPoint] = useState<Point | undefined>(undefined);
+function OfferPage({ offer, offerList, guestReview, city}: {offer:OfferIdDescription | undefined; offerList:OfferDescription[]; guestReview:review[];city:string}):JSX.Element{
+  const [selectedPoint, setSelectedPoint] = useState<OfferDescription | undefined>(undefined);
 
-  const { id } = useParams<{ id: string }>();
+  //const { id } = useParams<{ id: string }>();
 
-  const filteredOffer:OfferDescription[] = offers.offer.filter((of) =>(of.id === id));
+  //const filteredOffer:OfferIdDescription[] = offerList.filter((of) =>(of.id === id));
   const handleListItemHover = (listItemId: string) => {
-    const currentPoint = offers.offer.find((o) => o.id.toString() === listItemId)?.point;
+    const currentPoint = offerList.find((o) => o.id.toString() === listItemId);
     setSelectedPoint(currentPoint);
   };
   return (
@@ -57,7 +57,7 @@ function OfferPage({ offers, guestReview, city}: {offers:CityOfferDescription;gu
         <section className="offer">
           <div className="offer__gallery-container container">
             <div className="offer__gallery">
-              {filteredOffer[0].images.map((image) => (
+              {offer.images.map((image) => (
                 <div key={image} className="offer__image-wrapper">
                   <img className="offer__image" src={image} alt="Фото студии" />
                 </div>
@@ -66,45 +66,50 @@ function OfferPage({ offers, guestReview, city}: {offers:CityOfferDescription;gu
           </div>
           <div className="offer__container container">
             <div className="offer__wrapper">
-              {filteredOffer[0].isPremium ? (
+              {offer.isPremium ? (
                 <div className="offer__mark">
                   <span>Premium</span>
                 </div>
               ) : null}
               <div className="offer__name-wrapper">
                 <h1 className="offer__name">
-                  {filteredOffer[0].offerName}
+                  {offer.title}
                 </h1>
-                <button className={filteredOffer[0].bookmark === 'In bookmarks' ? 'offer__bookmark-button offer__bookmark-button--active button' : 'offer__bookmark-button button'} type="button">
+                <button className={offer.isFavorite ? 'offer__bookmark-button offer__bookmark-button--active button' : 'offer__bookmark-button button'} type="button">
                   <svg className="offer__bookmark-icon" width="31" height="33">
                     <use xlinkHref="#icon-bookmark"></use>
                   </svg>
-                  <span className="visually-hidden">{filteredOffer[0].bookmark}</span>
+                  <span className="visually-hidden">{offer.isFavorite ? 'In bookmark' : 'To bookmark'}</span>
                 </button>
               </div>
               <div className="offer__rating rating">
                 <div className="offer__stars rating__stars">
-                  <span style={{width: filteredOffer[0].raitingStars}}></span>
+                  <span style={{width: `${(offer.rating / 5) * 100}%`}}></span>
                   <span className="visually-hidden">Rating</span>
                 </div>
-                <span className="offer__rating-value rating__value">{filteredOffer[0].raiting}</span>
+                <span className="offer__rating-value rating__value">{offer.rating}</span>
               </div>
               <ul className="offer__features">
-                {filteredOffer[0].features.map((feature) => (
-                  <li key={feature} className="offer__feature offer__feature--entire">
-                    {feature}
-                  </li>
-                ))}
+                <li className="offer__feature offer__feature--entire">
+                  {offer.type}
+                </li>
+                <li className="offer__feature offer__feature--entire">
+                  {offer.bedrooms} Bedrooms
+                </li>
+                <li className="offer__feature offer__feature--entire">
+                  Max {offer.maxAdults} Adults
+                </li>
+                )
 
               </ul>
               <div className="offer__price">
-                <b className="offer__price-value">&euro;{filteredOffer[0].price}</b>
+                <b className="offer__price-value">&euro;{offer.price}</b>
                 <span className="offer__price-text">&nbsp;night</span>
               </div>
               <div className="offer__inside">
                 <h2 className="offer__inside-title">What&apos;s inside</h2>
                 <ul className="offer__inside-list">
-                  {filteredOffer[0].inside.map((ins) => (
+                  {offer.goods.map((ins) => (
                     <li key={ins} className="offer__inside-item">
                       {ins}
                     </li>
@@ -115,22 +120,19 @@ function OfferPage({ offers, guestReview, city}: {offers:CityOfferDescription;gu
                 <h2 className="offer__host-title">Meet the host</h2>
                 <div className="offer__host-user user">
                   <div className="offer__avatar-wrapper offer__avatar-wrapper--pro user__avatar-wrapper">
-                    <img className="offer__avatar user__avatar" src={filteredOffer[0].hostAvatar} width="74" height="74" alt="Host avatar"/>
+                    <img className="offer__avatar user__avatar" src={offer.host.avatarUrl} width="74" height="74" alt="Host avatar"/>
                   </div>
                   <span className="offer__user-name">
-                    {filteredOffer[0].hostName}
+                    {offer.host.name}
                   </span>
                   <span className="offer__user-status">
-                    {filteredOffer[0].hostStatus}
+                    {offer.host.isPro}
                   </span>
                 </div>
                 <div className="offer__description">
-                  {filteredOffer[0].description.map((desc) => (
-                    <p key={desc} className="offer__text">
-                      {desc}
-                    </p>
-                  ))}
-
+                  <p className="offer__text">
+                    {offer.description}
+                  </p>
 
                 </div>
               </div>
@@ -147,18 +149,18 @@ function OfferPage({ offers, guestReview, city}: {offers:CityOfferDescription;gu
           </div>
           <section className="offer__map map">
             <Map
-              city={city}
-              selectedPoint={selectedPoint}
+              city={CITY.filter((c) => c.title === city)[0]}
+              selectedOffer={offerList.filter((i) => i.id === selectedPoint?.id)[0] }
               height={579}
               width={1144}
-              offer={offers.offer.filter((o) => o.id !== filteredOffer[0].id)}
+              offerList={offerList}
             />
           </section>
         </section>
         <div className="container">
           <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
-            <OfferList offer={offers.offer.filter((of) =>(of.id !== id))} onListItemHover={handleListItemHover} isMainPage = {false} />
+            <OfferList offer={offerList.filter((o) => o.id === offer.id)} onListItemHover={handleListItemHover} isMainPage = {false} city={city}/>
           </section>
         </div>
       </main>

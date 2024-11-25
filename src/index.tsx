@@ -4,6 +4,10 @@ import {Provider} from 'react-redux';
 import App from './Components/App/App.tsx';
 import {guestReview} from './mocks/review.js';
 import {store} from './store';
+import { fetchOffer, fetchOffers } from './store/apiActions.ts';
+
+store.dispatch(fetchOffers());
+store.dispatch(fetchOffer());
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
