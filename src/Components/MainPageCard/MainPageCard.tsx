@@ -2,7 +2,7 @@ import { OfferDescription } from '../../types/offerDescription.ts';
 import {useState} from 'react';
 import { Link } from 'react-router-dom';
 import {MouseEvent} from 'react';
-import { fetchOffer } from '../../store/apiActions.ts';
+import { fetchComments, fetchOffer, fetchOfferNeibourhood } from '../../store/apiActions.ts';
 import { store } from '../../store/index.ts';
 
 type CardIdProps = {onAnswer: (cardId:string) => void}
@@ -30,6 +30,8 @@ function MainPageCard({ offer, onAnswer, onListItemHover, isMainPage}: MainPageC
   const handleOfferIdLoad = (event: MouseEvent<HTMLElement>) => {
     event.preventDefault();
     store.dispatch(fetchOffer(offer.id));
+    store.dispatch(fetchOfferNeibourhood(offer.id));
+    store.dispatch(fetchComments(offer.id));
   };
   return(
     <article className={isMainPage ? 'cities__card place-card' : 'near-places__card place-card'}

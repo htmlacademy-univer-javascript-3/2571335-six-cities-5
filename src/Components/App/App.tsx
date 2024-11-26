@@ -6,14 +6,13 @@ import OfferPage from '../OfferPage/OfferPage.tsx';
 import FavouritePage from '../FavouritePage/FavouritePage.tsx';
 import LoginPage from '../LoginPage/LoginPage.tsx';
 import PrivateRoute from '../PrivateRoute/PrivateRoute.tsx';
-import { review } from '../../types/review.ts';
 import {useAppSelector} from '../../hooks';
 import LoadingScreen from '../LoadingPage/LoadingPage.tsx';
 import HistoryRouter from '../HistoryRouter/HistoryRouter.tsx';
 import browserHistory from '../../services/browserHistory.ts';
 
 
-function App({ guestReview } : { guestReview: review[]}): JSX.Element {
+function App(): JSX.Element {
   const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
   const city = useAppSelector((state) => state.city);
   const offerlist = useAppSelector((state) => state.offerlist);
@@ -51,7 +50,7 @@ function App({ guestReview } : { guestReview: review[]}): JSX.Element {
         />
         <Route
           path = {AppRoute.Offer}
-          element = {<OfferPage offer = {offer} offerList={offerlist} guestReview={guestReview} city={city}/>}
+          element = {(offerlist.filter((o) => o.id === offer.id).length) > 0 ? <OfferPage offer = {offer} offerList={offerlist} city={city}/> : <NotFoundPage/>}
         />
         <Route
           path = '*'
