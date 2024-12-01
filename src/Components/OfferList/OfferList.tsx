@@ -1,4 +1,3 @@
-import React from 'react';
 import { OfferDescription } from '../../types/offerDescription.ts';
 import MainPageCard from '../MainPageCard/MainPageCard.tsx';
 
@@ -25,4 +24,4 @@ function OfferList(OfferListProps:OfferListProps){
     </div>
   );
 }
-export default React.memo(OfferList);
+export default (OfferList);

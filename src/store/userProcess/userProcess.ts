@@ -20,11 +20,12 @@ export const userProcess = createSlice({
       .addCase(checkAuthAction.fulfilled, (state, action) => {
         if (action.payload === 'error'){
           state.authorizationStatus = AuthorizationStatus.NoAuth;
-          state.isUserDataLoading = false;}
-        else 
-          {state.authorizationStatus = AuthorizationStatus.Auth;
+          state.isUserDataLoading = false;
+        } else {
+          state.authorizationStatus = AuthorizationStatus.Auth;
           state.userEmail = action.payload;
-          state.isUserDataLoading = false;}
+          state.isUserDataLoading = false;
+        }
       })
       .addCase(checkAuthAction.rejected, (state) => {
         state.authorizationStatus = AuthorizationStatus.NoAuth;
@@ -50,8 +51,8 @@ export const userProcess = createSlice({
       })
       .addCase(logoutAction.pending, (state)=> {
         state.isUserDataLoading = true;
-      })
+      });
 
-      
+
   }
 });

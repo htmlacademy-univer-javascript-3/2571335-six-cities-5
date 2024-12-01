@@ -11,25 +11,26 @@ import LoadingScreen from '../LoadingPage/LoadingPage.tsx';
 import HistoryRouter from '../HistoryRouter/HistoryRouter.tsx';
 import browserHistory from '../../services/browserHistory.ts';
 import { useMemo } from 'react';
+import { getAuthorizationStatus, getCity, getOffer, getOfferList, getUserEmail, isLoading } from '../../store/selectors.ts';
 function App(): JSX.Element {
 
-  const authorizationStatus_ = useAppSelector((state) => state.User.authorizationStatus);
-  const authorizationStatus = useMemo(() => {return authorizationStatus_},[authorizationStatus_]);
+  const authStatus = useAppSelector(getAuthorizationStatus);
+  const authorizationStatus = useMemo(() => authStatus,[authStatus]);
 
-  const c = useAppSelector((state) => state.City.city);
-  const city = useMemo(() => {return c},[c]);
+  const cityName = useAppSelector(getCity);
+  const city = useMemo(() => cityName,[cityName]);
 
-  const olist = useAppSelector((state) => state.Data.offerlist);
-  const offerList = useMemo(() => {return olist},[olist]);
+  const getList = useAppSelector(getOfferList);
+  const offerList = useMemo(() => getList,[getList]);
 
-  const isDataL = useAppSelector((state) => state.Data.isOffersLoading);
-  const isDataLoading = useMemo(() => {return isDataL}, [isDataL]);
+  const isLoadingStatus = useAppSelector(isLoading);
+  const isDataLoading = useMemo(() => isLoadingStatus, [isLoadingStatus]);
 
-  const off = useAppSelector((state) => state.Data.offer);
-  const offer = useMemo(() => {return off},[off]);
+  const gotOffer = useAppSelector(getOffer);
+  const offer = useMemo(() => gotOffer,[gotOffer]);
 
-  const userE = useAppSelector((state) => state.User.userEmail);
-  const userEmail = useMemo(() => {return userE},[userE]);
+  const gotUserEmail = useAppSelector(getUserEmail);
+  const userEmail = useMemo(() => gotUserEmail,[gotUserEmail]);
 
   if (authorizationStatus === AuthorizationStatus.Unknown || isDataLoading) {
     return (

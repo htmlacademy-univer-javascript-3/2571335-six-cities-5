@@ -16,52 +16,45 @@ export const dataProcess = createSlice({
   name: NAMESPACE.DATA,
   initialState,
   reducers: {
-    loadComments: (state,action) => state.comments = action.payload,
-    loadOffer: (state, action) => state.offer = action.payload,
-    loadOfferList: (state, action) => state.offerlist = action.payload,
-    setDataLoadingStatus: (state, action) => state.isOffersLoading = action.payload,
-    loadOfferNearby: (state,action) => state.nearbyOffers = action.payload,
   },
   extraReducers (builder) {
     builder
-    .addCase(fetchOffer.fulfilled, (state, action) => {
+      .addCase(fetchOffer.fulfilled, (state, action) => {
         state.offer = action.payload;
         state.isOffersLoading = false;
-    })
-    .addCase(fetchOffer.rejected, (state) => {
+      })
+      .addCase(fetchOffer.rejected, (state) => {
         state.offer = emptyOffer;
-    })
-    .addCase(fetchOffer.pending, (state) => {
+      })
+      .addCase(fetchOffer.pending, (state) => {
         state.isOffersLoading = true;
-    })
+      })
 
-    .addCase(fetchOffers.fulfilled, (state, action) => {
+      .addCase(fetchOffers.fulfilled, (state, action) => {
         state.offerlist = action.payload;
-    })
-    .addCase(fetchOfferNeibourhood.fulfilled, (state, action) => {
+      })
+      .addCase(fetchOfferNeibourhood.fulfilled, (state, action) => {
         state.nearbyOffers = action.payload;
-    })
+      })
 
-    .addCase(fetchComments.fulfilled, (state, action) => {
+      .addCase(fetchComments.fulfilled, (state, action) => {
         state.comments = action.payload;
-    })
-    .addCase(fetchComments.rejected, (state) => {
-      state.comments = [];
-    })
-    .addCase(fetchComments.pending, (state) => {
-      state.isOffersLoading = true;
-    })
+      })
+      .addCase(fetchComments.rejected, (state) => {
+        state.comments = [];
+      })
+      .addCase(fetchComments.pending, (state) => {
+        state.isOffersLoading = true;
+      })
 
-    .addCase(postComment.fulfilled, (state, action) => {
+      .addCase(postComment.fulfilled, (state, action) => {
         state.comments = action.payload;
-    })
-    .addCase(postComment.rejected, (state) => {
-      state.comments = [];
-    })
-    .addCase(postComment.pending, (state) => {
-      state.isOffersLoading = true;
-    })
+      })
+      .addCase(postComment.rejected, (state) => {
+        state.comments = [];
+      })
+      .addCase(postComment.pending, (state) => {
+        state.isOffersLoading = true;
+      });
   }
 });
-
-export const {loadComments,loadOffer, setDataLoadingStatus, loadOfferNearby, loadOfferList} =  dataProcess.actions;

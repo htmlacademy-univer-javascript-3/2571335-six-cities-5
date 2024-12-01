@@ -1,9 +1,9 @@
-import { useMemo } from "react";
-import { OfferDescription } from "../types/offerDescription";
-import { FILTERS } from "../mocks/filter";
+import { useMemo } from 'react';
+import { OfferDescription } from '../types/offerDescription';
+import { FILTERS } from '../mocks/filter';
 
 export const useFilter = (offerList:OfferDescription[], selectedFilter:string): OfferDescription[] =>
-   useMemo(() => {
+  useMemo(() => {
     const sorted = [...offerList];
     switch (selectedFilter) {
       case FILTERS[1]:

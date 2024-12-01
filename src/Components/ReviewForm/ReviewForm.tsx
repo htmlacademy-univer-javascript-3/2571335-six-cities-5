@@ -88,4 +88,4 @@ function ReviewForm(){
     </form>
   );
 }
-export default ReviewForm;
+export default React.memo(ReviewForm);

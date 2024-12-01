@@ -1,6 +1,7 @@
 import {useRef, FormEvent} from 'react';
 import {useAppDispatch} from '../../hooks';
 import {loginAction} from '../../store/apiActions';
+import React from 'react';
 
 function LoginPage():JSX.Element{
   const loginRef = useRef<HTMLInputElement | null>(null);
@@ -75,4 +76,4 @@ function LoginPage():JSX.Element{
     </div>
   );
 }
-export default LoginPage;
+export default React.memo(LoginPage);

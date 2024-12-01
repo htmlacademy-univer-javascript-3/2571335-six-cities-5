@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import { OfferDescription, OfferIdDescription } from '../../types/offerDescription.ts';
 import ReviewForm from '../../Components/ReviewForm/ReviewForm.tsx';
 import ReviewList from '../ReviewList/ReviewList.tsx';
@@ -9,23 +9,31 @@ import UserHeaderInfo from '../UserInfoHeader/UserInfoHeader.tsx';
 import { useAppSelector } from '../../hooks/index.ts';
 import { CommentList } from '../../types/comment.ts';
 import { AuthorizationStatus } from '../../mocks/login.ts';
-import React from 'react';
+import { getAuthorizationStatus, getComments, getOffersNearby, getUserEmail } from '../../store/selectors.ts';
 
 function OfferPage({ offer, offerList, city}: {offer:OfferIdDescription ; offerList:OfferDescription[]; city:string}):JSX.Element{
   const [selectedPoint, setSelectedPoint] = useState<OfferDescription | undefined>(undefined);
-  const authStatus = useAppSelector((state) => state.User.authorizationStatus);
-  const userEmail = useAppSelector((state) => state.User.userEmail);
-  const handleListItemHover = (listItemId: string) => {
+
+  const authStatus = useAppSelector(getAuthorizationStatus);
+  const authStatusMemo = useMemo(() => authStatus,[authStatus]);
+
+  const userEmail = useAppSelector(getUserEmail);
+  const userEmailMemo = useMemo(() => userEmail,[userEmail]);
+
+  const handleListItemHover = useCallback((listItemId: string) => {
     const currentPoint = offerList.find((o) => o.id.toString() === listItemId);
     setSelectedPoint(currentPoint);
-  };
+  },[selectedPoint]);
 
-  const nearbyOffers = useAppSelector((store) => store.Data.nearbyOffers);
-  const comments:CommentList = useAppSelector((store) => store.Data.comments);
+  const nearOffers = useAppSelector(getOffersNearby);
+  const nearbyOffers = useMemo(() => nearOffers, [nearOffers]);
+
+  const commentList:CommentList = useAppSelector(getComments);
+  const comments = useMemo(()=> commentList,[commentList]);
   return (
 
     <div className="page">
-      <UserHeaderInfo authStatus={authStatus} userEmail={userEmail}/>
+      <UserHeaderInfo authStatus={authStatusMemo} userEmail={userEmailMemo}/>
 
       <main className="page__main page__main--offer">
         <section className="offer">
@@ -137,4 +145,4 @@ function OfferPage({ offer, offerList, city}: {offer:OfferIdDescription ; offerL
     </div>
   );
 }
-export default React.memo(OfferPage);
+export default (OfferPage);

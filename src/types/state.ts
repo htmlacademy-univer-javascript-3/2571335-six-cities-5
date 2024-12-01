@@ -11,7 +11,7 @@ export type AppDispatch = typeof store.dispatch;
 export type UserProcess = {
     authorizationStatus: AuthorizationStatus;
     userEmail : string;
-    isUserDataLoading : boolean; 
+    isUserDataLoading : boolean;
 }
 export type CityProcess = {
     city : string;

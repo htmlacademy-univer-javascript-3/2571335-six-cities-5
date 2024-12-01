@@ -1,10 +1,9 @@
 import { OfferDescription } from '../../types/offerDescription.ts';
 import { Link } from 'react-router-dom';
-import {MouseEvent} from 'react';
+import { MouseEvent} from 'react';
 import { fetchComments, fetchOffer, fetchOfferNeibourhood } from '../../store/apiActions.ts';
 import { store } from '../../store/index.ts';
 import React from 'react';
-
 
 type MainPageCardProps = {
   offer: OfferDescription;

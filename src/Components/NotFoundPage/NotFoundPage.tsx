@@ -3,7 +3,7 @@ import UserHeaderInfo from '../UserInfoHeader/UserInfoHeader';
 import React from 'react';
 import { AuthorizationStatus } from '../../mocks/login';
 
-function NotFoundPage({userEmail, authStatus}:{userEmail:string, authStatus:AuthorizationStatus}):JSX.Element{
+function NotFoundPage({userEmail, authStatus}:{userEmail:string; authStatus:AuthorizationStatus}):JSX.Element{
   return(
     <div className="page page--gray page--main">
       <UserHeaderInfo userEmail={userEmail} authStatus={authStatus}/>
