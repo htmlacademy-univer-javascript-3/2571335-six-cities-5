@@ -1,3 +1,4 @@
+import React from 'react';
 import { OfferDescription } from '../../types/offerDescription.ts';
 import MainPageCard from '../MainPageCard/MainPageCard.tsx';
 
@@ -19,12 +20,9 @@ function OfferList(OfferListProps:OfferListProps){
           offer={offerItem}
           onListItemHover={onListItemHover}
           isMainPage={isMainPage}
-          onAnswer={() => {
-            throw new Error('Function \'onAnswer\' isn\'t implemented.');
-          }}
         />
       ))}
     </div>
   );
 }
-export default OfferList;
+export default React.memo(OfferList);

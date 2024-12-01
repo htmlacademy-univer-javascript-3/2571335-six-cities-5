@@ -8,24 +8,18 @@ import { OfferDescription } from '../../types/offerDescription.ts';
 import SortFilter from '../SortFilter/SortFilter.tsx';
 import { FILTERS } from '../../mocks/filter';
 import UserHeaderInfo from '../UserInfoHeader/UserInfoHeader.tsx';
+import React from 'react';
+import { useFilter } from '../../hooks/useFilter.ts';
 
 function MainPage({ offerList }: { offerList: OfferDescription[] }): JSX.Element {
+
   const [selectedPoint, setSelectedPoint] = useState<OfferDescription | undefined>(undefined);
   const [selectedFilter, setFilter] = useState<string>(FILTERS[0]);
-  const cityName = useAppSelector((state) => state.city);
-  const sortedOffers = useMemo(() => {
-    const sorted = [...offerList];
-    switch (selectedFilter) {
-      case FILTERS[1]:
-        return sorted.sort((a, b) => a.price - b.price);
-      case FILTERS[2]:
-        return sorted.sort((a, b) => b.price - a.price);
-      case FILTERS[3]:
-        return sorted.sort((a, b) => b.rating - a.rating);
-      default:
-        return sorted;
-    }
-  }, [offerList, selectedFilter]);
+
+  const cityName = useAppSelector((state) => state.City.city);
+  const authStatus = useAppSelector((state) => state.User.authorizationStatus);
+  const userEmail = useAppSelector((state) => state.User.userEmail);
+  const sortedOffers = useFilter(offerList, selectedFilter);
   const handleListItemHover = (listItemId: string) => {
     const currentPoint = offerList.find((point) => point.id === listItemId);
     if (currentPoint !== selectedPoint) {
@@ -38,10 +32,13 @@ function MainPage({ offerList }: { offerList: OfferDescription[] }): JSX.Element
       setFilter(filter);
     }
   };
+  const city = useMemo(()=>{return CITY.filter((c) => c.title === cityName)[0]},[cityName]);
+  const offerListMap = useMemo(() => {return offerList},[offerList]);
+  const selectedOffer = useMemo(() => {return offerList.filter((i) => i.id === selectedPoint?.id)[0]},[selectedPoint]);
 
   return (
     <div className="page page--gray page--main">
-      <UserHeaderInfo/>
+      <UserHeaderInfo authStatus={authStatus} userEmail={userEmail}/>
 
       <main className="page__main page__main--index">
         <h1 className="visually-hidden">Cities</h1>
@@ -65,9 +62,9 @@ function MainPage({ offerList }: { offerList: OfferDescription[] }): JSX.Element
             <div className="cities__right-section">
               <section className="cities__map map">
                 <Map
-                  city={CITY.filter((c) => c.title === cityName)[0]}
-                  selectedOffer={offerList.filter((i) => i.id === selectedPoint?.id)[0] }
-                  offerList={offerList}
+                  city={city}
+                  selectedOffer={selectedOffer}
+                  offerList={offerListMap}
                   height={850}
                   width={512}
                 />
@@ -80,4 +77,4 @@ function MainPage({ offerList }: { offerList: OfferDescription[] }): JSX.Element
   );
 }
 
-export default MainPage;
+export default React.memo(MainPage);

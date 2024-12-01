@@ -7,24 +7,25 @@ import Map from '../Map/Map.tsx';
 import { CITY } from '../../mocks/city.ts';
 import UserHeaderInfo from '../UserInfoHeader/UserInfoHeader.tsx';
 import { useAppSelector } from '../../hooks/index.ts';
-import { Comment } from '../../types/comment.ts';
+import { CommentList } from '../../types/comment.ts';
 import { AuthorizationStatus } from '../../mocks/login.ts';
+import React from 'react';
 
 function OfferPage({ offer, offerList, city}: {offer:OfferIdDescription ; offerList:OfferDescription[]; city:string}):JSX.Element{
   const [selectedPoint, setSelectedPoint] = useState<OfferDescription | undefined>(undefined);
-  const authStatus = useAppSelector((state) => state.authorizationStatus);
-
+  const authStatus = useAppSelector((state) => state.User.authorizationStatus);
+  const userEmail = useAppSelector((state) => state.User.userEmail);
   const handleListItemHover = (listItemId: string) => {
     const currentPoint = offerList.find((o) => o.id.toString() === listItemId);
     setSelectedPoint(currentPoint);
   };
 
-  const nearbyOffers = useAppSelector((store) => store.nearbyOffers);
-  const comments:Comment[] = useAppSelector((store) => store.comments);
+  const nearbyOffers = useAppSelector((store) => store.Data.nearbyOffers);
+  const comments:CommentList = useAppSelector((store) => store.Data.comments);
   return (
 
     <div className="page">
-      <UserHeaderInfo/>
+      <UserHeaderInfo authStatus={authStatus} userEmail={userEmail}/>
 
       <main className="page__main page__main--offer">
         <section className="offer">
@@ -136,4 +137,4 @@ function OfferPage({ offer, offerList, city}: {offer:OfferIdDescription ; offerL
     </div>
   );
 }
-export default OfferPage;
+export default React.memo(OfferPage);

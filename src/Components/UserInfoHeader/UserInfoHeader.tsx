@@ -1,12 +1,13 @@
 import { Link } from 'react-router-dom';
-import { useAppDispatch, useAppSelector } from '../../hooks';
+import { useAppDispatch } from '../../hooks';
 import { AuthorizationStatus } from '../../mocks/login';
 import { logoutAction } from '../../store/apiActions';
+import { getToken } from '../../services/token';
 
 
-function UserHeaderInfo(){
-  const authStatus = useAppSelector((state) => state.authorizationStatus);
-  const userEmail = useAppSelector((state) => state.userEmail);
+function UserHeaderInfo({authStatus, userEmail}:{authStatus:AuthorizationStatus,userEmail:string}){
+  //const authStatus = useAppSelector((state) => state.authorizationStatus);
+  //const userEmail = useAppSelector((state) => state.userEmail);
   const dispatch = useAppDispatch();
 
   return(
@@ -40,7 +41,7 @@ function UserHeaderInfo(){
                       <span className="header__signout"
                         onClick={(evt) => {
                           evt.preventDefault();
-                          dispatch(logoutAction());
+                          dispatch(logoutAction(getToken()));
                         }}
                       >Sign out
                       </span>
