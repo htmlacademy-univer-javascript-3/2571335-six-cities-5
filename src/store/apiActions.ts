@@ -139,7 +139,7 @@ export const setFavourites = createAsyncThunk<OfferDescription[], setFavourite, 
   state: State;
   extra: AxiosInstance;
 }>(
-  'data/getFavourites',
+  'data/setFavourites',
   async({offerId, status}, {extra : api}) => {
     try{
       const {data} = await api.post<OfferDescription[]>(`${APIRoute.FavouriteList}/${offerId}/${status}`);
