@@ -107,9 +107,45 @@ export const postComment = createAsyncThunk<Comment[], CommentPost, {
   state: State;
   extra: AxiosInstance;
 }>(
-  'post/Comment',
+  'data/postComment',
   async ({comment, rating, id}, {extra: api}) => {
     const {data} = await api.post<CommentList>(`${APIRoute.Comments}/${id}`, {comment, rating});
     return data;
   },
+);
+
+export const getFavourites = createAsyncThunk<OfferDescription[], string, {
+  dispatch: AppDispatch;
+  state: State;
+  extra: AxiosInstance;
+}>(
+  'data/getFavourites',
+  async(token, {extra : api}) => {
+    try{
+      const {data} = await api.get<OfferDescription[]>(APIRoute.FavouriteList, {params : {'X-Token' : token}});
+      return (data);
+    } catch (error){
+      return ([]);
+    }
+  }
+);
+
+type setFavourite = {
+  offerId: string;
+  status:number;
+}
+export const setFavourites = createAsyncThunk<OfferDescription[], setFavourite, {
+  dispatch: AppDispatch;
+  state: State;
+  extra: AxiosInstance;
+}>(
+  'data/getFavourites',
+  async({offerId, status}, {extra : api}) => {
+    try{
+      const {data} = await api.post<OfferDescription[]>(`${APIRoute.FavouriteList}/${offerId}/${status}`);
+      return (data);
+    } catch (error){
+      return ([]);
+    }
+  }
 );

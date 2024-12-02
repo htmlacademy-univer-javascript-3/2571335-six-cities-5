@@ -2,14 +2,15 @@ import {createSlice} from '@reduxjs/toolkit';
 import { NAMESPACE } from '../../mocks/sliceHeaders.ts';
 import {DataProcess, } from '../../types/state';
 import { emptyOffer } from '../../mocks/offer.ts';
-import { fetchComments, fetchOffer, fetchOfferNeibourhood, fetchOffers, postComment } from '../apiActions.ts';
+import { fetchComments, fetchOffer, fetchOfferNeibourhood, fetchOffers, getFavourites, postComment, setFavourites } from '../apiActions.ts';
 
 const initialState: DataProcess = {
   offerlist: [],
   isOffersLoading: false,
   offer:emptyOffer,
   nearbyOffers:[],
-  comments:[]
+  comments:[],
+  favouriteList: []
 };
 
 export const dataProcess = createSlice({
@@ -54,6 +55,22 @@ export const dataProcess = createSlice({
         state.comments = [];
       })
       .addCase(postComment.pending, (state) => {
+        state.isOffersLoading = true;
+      })
+
+      .addCase(getFavourites.fulfilled, (state,action) => {
+        state.favouriteList = action.payload;
+        state.isOffersLoading = false;
+      })
+      .addCase(getFavourites.pending, (state) => {
+        state.isOffersLoading = true;
+      })
+
+      .addCase(setFavourites.fulfilled, (state, action) => {
+        state.favouriteList = action.payload;
+        state.isOffersLoading = false;
+      })
+      .addCase(setFavourites.pending, (state) => {
         state.isOffersLoading = true;
       });
   }
