@@ -6,10 +6,11 @@ type OfferListProps = {
   offer:OfferDescription[];
   isMainPage:boolean;
   city:string;
+  favouriteList: OfferDescription[];
 };
 
 function OfferList(OfferListProps:OfferListProps){
-  const { onListItemHover, offer , isMainPage,city} = OfferListProps;
+  const { onListItemHover, offer , isMainPage,city, favouriteList} = OfferListProps;
 
   return(
     <div className={isMainPage ? 'cities__places-list places__list tabs__content' : 'near-places__list places__list'}>
@@ -19,6 +20,7 @@ function OfferList(OfferListProps:OfferListProps){
           offer={offerItem}
           onListItemHover={onListItemHover}
           isMainPage={isMainPage}
+          favouriteList={favouriteList}
         />
       ))}
     </div>

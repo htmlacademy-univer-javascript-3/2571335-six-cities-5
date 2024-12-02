@@ -9,7 +9,7 @@ import UserHeaderInfo from '../UserInfoHeader/UserInfoHeader.tsx';
 import { useAppSelector } from '../../hooks/index.ts';
 import { CommentList } from '../../types/comment.ts';
 import { AuthorizationStatus } from '../../mocks/login.ts';
-import { getAuthorizationStatus, getComments, getOffersNearby, getUserEmail } from '../../store/selectors.ts';
+import { getAuthorizationStatus, getComments, getFavourites, getOffersNearby, getUserEmail } from '../../store/selectors.ts';
 
 function OfferPage({ offer, offerList, city}: {offer:OfferIdDescription ; offerList:OfferDescription[]; city:string}):JSX.Element{
   const [selectedPoint, setSelectedPoint] = useState<OfferDescription | undefined>(undefined);
@@ -19,6 +19,9 @@ function OfferPage({ offer, offerList, city}: {offer:OfferIdDescription ; offerL
 
   const userEmail = useAppSelector(getUserEmail);
   const userEmailMemo = useMemo(() => userEmail,[userEmail]);
+
+  const favouriteList = useAppSelector(getFavourites);
+  const favouriteListMemo = useMemo(() => favouriteList,[favouriteList]);
 
   const handleListItemHover = useCallback((listItemId: string) => {
     const currentPoint = offerList.find((o) => o.id.toString() === listItemId);
@@ -138,7 +141,7 @@ function OfferPage({ offer, offerList, city}: {offer:OfferIdDescription ; offerL
         <div className="container">
           <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
-            <OfferList offer={nearbyOffers} onListItemHover={handleListItemHover} isMainPage = {false} city={city}/>
+            <OfferList offer={nearbyOffers} onListItemHover={handleListItemHover} isMainPage = {false} city={city} favouriteList={favouriteListMemo}/>
           </section>
         </div>
       </main>

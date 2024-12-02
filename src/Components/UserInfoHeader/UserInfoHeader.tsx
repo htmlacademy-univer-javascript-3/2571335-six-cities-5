@@ -1,13 +1,14 @@
 import { Link } from 'react-router-dom';
-import { useAppDispatch } from '../../hooks';
+import { useAppDispatch, useAppSelector } from '../../hooks';
 import { AppRoute, AuthorizationStatus } from '../../mocks/login';
 import { logoutAction } from '../../store/apiActions';
 import { getToken } from '../../services/token';
+import { getFavourites } from '../../store/selectors';
 
 
 function UserHeaderInfo({authStatus, userEmail}:{authStatus:AuthorizationStatus; userEmail:string}){
   const dispatch = useAppDispatch();
-
+  const favouriteCount = useAppSelector(getFavourites).length;
   return(
     <header className="header">
       <div className="container">
@@ -27,7 +28,7 @@ function UserHeaderInfo({authStatus, userEmail}:{authStatus:AuthorizationStatus;
                     <a className="header__nav-link header__nav-link--profile" href="#">
                       <div className="header__avatar-wrapper user__avatar-wrapper"></div>
                       <span className="header__user-name user__name">{userEmail}</span>
-                      <span className="header__favorite-count">3</span>
+                      <span className="header__favorite-count">{favouriteCount}</span>
                     </a>
                   </li> : null
               }

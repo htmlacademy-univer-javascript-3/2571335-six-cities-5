@@ -11,7 +11,7 @@ import LoadingScreen from '../LoadingPage/LoadingPage.tsx';
 import HistoryRouter from '../HistoryRouter/HistoryRouter.tsx';
 import browserHistory from '../../services/browserHistory.ts';
 import { useMemo } from 'react';
-import { getAuthorizationStatus, getCity, getOffer, getOfferList, getUserEmail, isLoading } from '../../store/selectors.ts';
+import { getAuthorizationStatus, getCity, getFavourites, getOffer, getOfferList, getUserEmail, isLoading } from '../../store/selectors.ts';
 function App(): JSX.Element {
 
   const authStatus = useAppSelector(getAuthorizationStatus);
@@ -31,6 +31,9 @@ function App(): JSX.Element {
 
   const gotUserEmail = useAppSelector(getUserEmail);
   const userEmail = useMemo(() => gotUserEmail,[gotUserEmail]);
+
+  const favouriteList = useAppSelector(getFavourites);
+  const favouriteListMemo = useMemo(() => favouriteList, [favouriteList]);
 
   if (authorizationStatus === AuthorizationStatus.Unknown || isDataLoading) {
     return (
@@ -56,7 +59,7 @@ function App(): JSX.Element {
               authorizationStatus={authorizationStatus}
             >
               <FavouritePage
-                offers = {offerList}
+                offers = {favouriteListMemo}
               />
             </PrivateRoute>
           }

@@ -15,3 +15,4 @@ const userDataIsLoading = (state : State) : boolean => state[NAMESPACE.USER].isU
 export const isLoading = offerIsLoadingStatus || userDataIsLoading;
 export const getCity = (state : State) : string => state[NAMESPACE.CITY].city;
 export const getOffersNearby = (state : State) : OfferDescription[] => state[NAMESPACE.DATA].nearbyOffers;
+export const getFavourites = (state:State) : OfferDescription[] => state[NAMESPACE.DATA].favouriteList;
