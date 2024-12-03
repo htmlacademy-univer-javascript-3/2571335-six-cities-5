@@ -1,6 +1,6 @@
 import { OfferDescription } from '../../types/offerDescription.ts';
 import { Link} from 'react-router-dom';
-import { MouseEvent, useState} from 'react';
+import { MouseEvent} from 'react';
 import { fetchComments, fetchOffer, fetchOfferNeibourhood, setFavourites } from '../../store/apiActions.ts';
 import { store } from '../../store/index.ts';
 import React from 'react';
@@ -12,7 +12,6 @@ type MainPageCardProps = {
 };
 
 function MainPageCard({ offer, onListItemHover, isMainPage}: MainPageCardProps): JSX.Element {
-  const [isFavorite, setFavourite] = useState<boolean>(offer.isFavorite);
 
   const handleListItemHover = (event: MouseEvent<HTMLLIElement>) => {
     event.preventDefault();
@@ -24,10 +23,9 @@ function MainPageCard({ offer, onListItemHover, isMainPage}: MainPageCardProps):
   };
   const handleFavouriteClick = (event: MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
-    setFavourite(!isFavorite);
     const favouriteInfo = {
       offerId:offer.id,
-      status: isFavorite ? 0 : 1
+      status: offer.isFavorite ? 0 : 1
     };
     store.dispatch(setFavourites(favouriteInfo));
   };
