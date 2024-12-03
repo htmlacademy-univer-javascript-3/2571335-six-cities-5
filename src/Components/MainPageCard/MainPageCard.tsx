@@ -7,13 +7,12 @@ import React from 'react';
 
 type MainPageCardProps = {
   offer: OfferDescription;
-  favouriteList: OfferDescription[];
   onListItemHover: (listItemName: string) => void;
   isMainPage:boolean;
 };
 
-function MainPageCard({ offer, onListItemHover, isMainPage, favouriteList}: MainPageCardProps): JSX.Element {
-  const [isFavorite, setFavourite] = useState<boolean>(favouriteList.length > 0 ? (favouriteList.filter((favotrite) => favotrite.id === offer.id)).length > 0 : false);
+function MainPageCard({ offer, onListItemHover, isMainPage}: MainPageCardProps): JSX.Element {
+  const [isFavorite, setFavourite] = useState<boolean>(offer.isFavorite);
 
   const handleListItemHover = (event: MouseEvent<HTMLLIElement>) => {
     event.preventDefault();
@@ -59,11 +58,11 @@ function MainPageCard({ offer, onListItemHover, isMainPage, favouriteList}: Main
             <b className="place-card__price-value">&euro;{offer.price}</b>
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
-          <button className={isFavorite ? 'place-card__bookmark-button place-card__bookmark-button--active button' : 'place-card__bookmark-button button'} type="button" onClick={handleFavouriteClick}>
+          <button className={offer.isFavorite ? 'place-card__bookmark-button place-card__bookmark-button--active button' : 'place-card__bookmark-button button'} type="button" onClick={handleFavouriteClick}>
             <svg className="place-card__bookmark-icon" width="18" height="19">
               <use xlinkHref="#icon-bookmark"/>
             </svg>
-            <span className="visually-hidden">{isFavorite ? 'In bookmarks' : 'To bookmarks' }</span>
+            <span className="visually-hidden">{offer.isFavorite ? 'In bookmarks' : 'To bookmarks' }</span>
           </button>
         </div>
         <div className="place-card__rating rating">

@@ -10,7 +10,7 @@ function MainEmpty({authStatus, userEmail, cityName}:{authStatus:AuthorizationSt
         <h1 className="visually-hidden">Cities</h1>
         <div className="tabs">
           <section className="locations container">
-            <CityList offerList={[]}/>
+            <CityList/>
           </section>
         </div>
         <div className="cities">

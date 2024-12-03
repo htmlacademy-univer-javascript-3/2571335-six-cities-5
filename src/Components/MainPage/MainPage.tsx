@@ -9,7 +9,7 @@ import SortFilter from '../SortFilter/SortFilter.tsx';
 import { FILTERS } from '../../mocks/filter';
 import UserHeaderInfo from '../UserInfoHeader/UserInfoHeader.tsx';
 import { useFilter } from '../../hooks/useFilter.ts';
-import { getAuthorizationStatus, getCity, getFavourites, getUserEmail } from '../../store/selectors.ts';
+import { getAuthorizationStatus, getCity, getUserEmail } from '../../store/selectors.ts';
 
 function MainPage({ offerList }: { offerList: OfferDescription[] }): JSX.Element {
 
@@ -27,11 +27,7 @@ function MainPage({ offerList }: { offerList: OfferDescription[] }): JSX.Element
   const sortedOffersMemo = useMemo(() => sortedOffers, [sortedOffers]);
   const authStatusMemo = useMemo(() => authStatus, [authStatus]);
   const userEmailMemo = useMemo(() => userEmail, [userEmail]);
-  const offerListMemo = useMemo(() => offerList, [offerList]);
   const selectedFilterMemo = useMemo(() => selectedFilter,[selectedFilter]);
-
-  const favouriteList = useAppSelector(getFavourites);
-  const favouriteListMemo = useMemo(() => favouriteList,[favouriteList]);
 
   const handleListItemHover = useCallback((listItemId: string) => {
     const currentPoint = offerList.find((point) => point.id === listItemId);
@@ -53,7 +49,7 @@ function MainPage({ offerList }: { offerList: OfferDescription[] }): JSX.Element
         <h1 className="visually-hidden">Cities</h1>
         <div className="tabs">
           <section className="locations container">
-            <CityList offerList={offerListMemo} />
+            <CityList/>
           </section>
         </div>
         <div className="cities">
@@ -65,7 +61,7 @@ function MainPage({ offerList }: { offerList: OfferDescription[] }): JSX.Element
                 <SortFilter filter={selectedFilterMemo} handleFilterEnter={handleFilterEnter} />
               </form>
               <div className="cities__places-list places__list tabs__content">
-                <OfferList offer={sortedOffersMemo} onListItemHover={handleListItemHover} isMainPage city={cityName} favouriteList={favouriteListMemo}/>
+                <OfferList offer={sortedOffersMemo} onListItemHover={handleListItemHover} isMainPage city={cityName}/>
               </div>
             </section>
             <div className="cities__right-section">
