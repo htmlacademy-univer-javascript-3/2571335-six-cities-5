@@ -60,6 +60,8 @@ function App(): JSX.Element {
             >
               <FavouritePage
                 offers = {favouriteListMemo}
+                authStatus = {authorizationStatus}
+                userEmail = {userEmail}
               />
             </PrivateRoute>
           }

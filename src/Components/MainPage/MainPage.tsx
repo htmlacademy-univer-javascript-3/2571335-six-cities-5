@@ -10,6 +10,7 @@ import { FILTERS } from '../../mocks/filter';
 import UserHeaderInfo from '../UserInfoHeader/UserInfoHeader.tsx';
 import { useFilter } from '../../hooks/useFilter.ts';
 import { getAuthorizationStatus, getCity, getFavourites, getUserEmail } from '../../store/selectors.ts';
+import MainEmpty from '../MainEmpty/MainEmpty.tsx';
 
 function MainPage({ offerList }: { offerList: OfferDescription[] }): JSX.Element {
 
@@ -82,7 +83,7 @@ function MainPage({ offerList }: { offerList: OfferDescription[] }): JSX.Element
           </div>
         </div>
       </main>
-    </div>
+    </div> 
   );
 }
 
