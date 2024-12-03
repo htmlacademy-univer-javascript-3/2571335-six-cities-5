@@ -13,6 +13,8 @@ type MainPageCardProps = {
 };
 
 function MainPageCard({ offer, onListItemHover, isMainPage, favouriteList}: MainPageCardProps): JSX.Element {
+  const [isFavorite, setFavourite] = useState<boolean>(favouriteList.length > 0 ? (favouriteList.filter((favotrite) => favotrite.id === offer.id)).length > 0 : false);
+
   const handleListItemHover = (event: MouseEvent<HTMLLIElement>) => {
     event.preventDefault();
     onListItemHover((offer.id));
@@ -27,16 +29,15 @@ function MainPageCard({ offer, onListItemHover, isMainPage, favouriteList}: Main
     const favouriteInfo = {
       offerId:offer.id,
       status: isFavorite ? 0 : 1
-    }
+    };
     store.dispatch(setFavourites(favouriteInfo));
-  }
+  };
   const handleOfferIdLoad = (event: MouseEvent<HTMLElement>) => {
     event.preventDefault();
     store.dispatch(fetchOffer(offer.id));
     store.dispatch(fetchOfferNeibourhood(offer.id));
     store.dispatch(fetchComments(offer.id));
   };
-  const [isFavorite, setFavourite] = useState<boolean>(favouriteList.length > 0 ? (favouriteList.filter((favotrite) => favotrite.id === offer.id)).length > 0 : false);
   return(
     <article className={isMainPage ? 'cities__card place-card' : 'near-places__card place-card'}
       onMouseEnter={handleListItemHover}

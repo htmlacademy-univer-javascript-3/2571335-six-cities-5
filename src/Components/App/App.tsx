@@ -12,6 +12,7 @@ import HistoryRouter from '../HistoryRouter/HistoryRouter.tsx';
 import browserHistory from '../../services/browserHistory.ts';
 import { useMemo } from 'react';
 import { getAuthorizationStatus, getCity, getFavourites, getOffer, getOfferList, getUserEmail, isLoading } from '../../store/selectors.ts';
+import MainEmpty from '../MainEmpty/MainEmpty.tsx';
 function App(): JSX.Element {
 
   const authStatus = useAppSelector(getAuthorizationStatus);
@@ -46,7 +47,9 @@ function App(): JSX.Element {
       <Routes>
         <Route
           path = {AppRoute.Main}
-          element = {<MainPage offerList={offerList}/>}
+          element={offerList.length > 0 ?
+            <MainPage offerList={offerList} /> :
+            <MainEmpty authStatus={authorizationStatus} cityName={cityName} userEmail={userEmail} />}
         />
         <Route
           path = {AppRoute.Login}

@@ -11,11 +11,11 @@ interface FavouritePageProps {
 
 function FavouritePage({ offers, authStatus, userEmail }: FavouritePageProps): JSX.Element {
   const cityList:string[] = [];
-  offers.forEach(offer => {
+  offers.forEach((offer) => {
     if (!cityList.includes(offer.city.name)){
       cityList.push(offer.city.name);
     }
-  })
+  });
   return (
     <div className="page">
       <UserHeaderInfo authStatus = {authStatus} userEmail = {userEmail}/>
@@ -23,7 +23,7 @@ function FavouritePage({ offers, authStatus, userEmail }: FavouritePageProps): J
         <div className="page__favorites-container container">
           <section className="favorites">
             <h1 className="favorites__title">Saved listing</h1>
-              <FavouriteList offers = {offers} cityList = {cityList}/>
+            <FavouriteList offers = {offers} cityList = {cityList}/>
           </section>
         </div>
       </main>
