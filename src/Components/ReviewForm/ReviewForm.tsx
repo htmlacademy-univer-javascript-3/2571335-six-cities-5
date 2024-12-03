@@ -12,7 +12,7 @@ function ReviewForm(){
   };
 
   const dispatch = useAppDispatch();
-  const offerId = useAppSelector((state) => state.offer.id);
+  const offerId = useAppSelector((state) => state.Data.offer.id);
   const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
     if (commentRef.current !== null && rating > 0) {
@@ -88,4 +88,4 @@ function ReviewForm(){
     </form>
   );
 }
-export default ReviewForm;
+export default React.memo(ReviewForm);

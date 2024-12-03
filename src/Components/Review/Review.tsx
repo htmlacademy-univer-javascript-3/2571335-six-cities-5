@@ -1,3 +1,4 @@
+import React from 'react';
 import { Comment } from '../../types/comment.ts';
 
 function Review({guestReview}:{guestReview:Comment}){
@@ -34,4 +35,4 @@ function Review({guestReview}:{guestReview:Comment}){
     </li>
   );
 }
-export default Review;
+export default React.memo(Review);

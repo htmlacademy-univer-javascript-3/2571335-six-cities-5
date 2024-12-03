@@ -1,12 +1,13 @@
 import {Link} from 'react-router-dom';
-import { changeCityAction } from '../../store/cityAction.ts';
+import { changeCityAction } from '../../store/cityProcess/cityProcess.ts';
 import {useAppDispatch, useAppSelector} from '../../hooks';
 import { CITY } from '../../mocks/city.ts';
 import { OfferDescription } from '../../types/offerDescription.ts';
+import { getCity } from '../../store/selectors.ts';
 
 function CityList({ offerList }: { offerList:OfferDescription[]}){
   const dispatch = useAppDispatch();
-  const cityName = useAppSelector((state) => state.city);
+  const cityName = useAppSelector(getCity);
 
   return (
     <ul className="locations__list tabs__list">
