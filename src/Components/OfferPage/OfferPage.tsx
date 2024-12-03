@@ -10,6 +10,8 @@ import { useAppSelector } from '../../hooks/index.ts';
 import { CommentList } from '../../types/comment.ts';
 import { AuthorizationStatus } from '../../mocks/login.ts';
 import { getAuthorizationStatus, getComments, getOffersNearby, getUserEmail } from '../../store/selectors.ts';
+import { store } from '../../store/index.ts';
+import { setFavourites } from '../../store/apiActions.ts';
 
 function OfferPage({ offer, offerList, city}: {offer:OfferIdDescription ; offerList:OfferDescription[]; city:string}):JSX.Element{
   const [selectedPoint, setSelectedPoint] = useState<OfferDescription | undefined>(undefined);
@@ -30,6 +32,14 @@ function OfferPage({ offer, offerList, city}: {offer:OfferIdDescription ; offerL
 
   const commentList:CommentList = useAppSelector(getComments);
   const comments = useMemo(()=> commentList,[commentList]);
+  const handleFavouriteClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+    const favouriteInfo = {
+      offerId:offer.id,
+      status: offer.isFavorite ? 0 : 1
+    };
+    store.dispatch(setFavourites(favouriteInfo));
+  };
   return (
 
     <div className="page">
@@ -57,7 +67,7 @@ function OfferPage({ offer, offerList, city}: {offer:OfferIdDescription ; offerL
                 <h1 className="offer__name">
                   {offer.title}
                 </h1>
-                <button className={offer.isFavorite ? 'offer__bookmark-button offer__bookmark-button--active button' : 'offer__bookmark-button button'} type="button">
+                <button className={offer.isFavorite ? 'offer__bookmark-button offer__bookmark-button--active button' : 'offer__bookmark-button button'} type="button" onClick={handleFavouriteClick}>
                   <svg className="offer__bookmark-icon" width="31" height="33">
                     <use xlinkHref="#icon-bookmark"></use>
                   </svg>
