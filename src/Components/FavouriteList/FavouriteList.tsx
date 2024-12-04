@@ -21,9 +21,7 @@ function FavouriteList({offers, cityList}:FavouriteListProp){
             </div>
             <div className="favorites__places">
               {offers.filter((offerCity)=>offerCity.city.name === city).map((offer) => (
-                <div key={offer.id} className="favorites__places">
-                  <FavouriteListCard {...offer}/>
-                </div>
+                <FavouriteListCard {...offer} key = {offer.id}/>
               ))}
             </div>
           </li>

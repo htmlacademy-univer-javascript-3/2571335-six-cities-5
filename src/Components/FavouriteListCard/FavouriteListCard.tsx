@@ -7,7 +7,8 @@ function FavouriteListCard(offer:OfferDescription){
     event.preventDefault();
     const favouriteInfo = {
       offerId:offer.id,
-      status: 0
+      status: 0,
+      isOfferPage: false
     };
     store.dispatch(setFavourites(favouriteInfo));
   };

@@ -13,6 +13,7 @@ import browserHistory from '../../services/browserHistory.ts';
 import { useMemo } from 'react';
 import { getAuthorizationStatus, getCity, getFavourites, getOffer, getOfferList, getUserEmail, isLoading } from '../../store/selectors.ts';
 import MainEmpty from '../MainEmpty/MainEmpty.tsx';
+import FavouritePageEmpty from '../FavouritePageEmpty/FavouritePageEmpty.tsx';
 function App(): JSX.Element {
 
   const authStatus = useAppSelector(getAuthorizationStatus);
@@ -58,14 +59,14 @@ function App(): JSX.Element {
         <Route
           path = {AppRoute.Favourites}
           element = {
-            <PrivateRoute
-              authorizationStatus={authorizationStatus}
-            >
-              <FavouritePage
-                offers = {favouriteListMemo}
-                authStatus = {authorizationStatus}
-                userEmail = {userEmail}
-              />
+            <PrivateRoute authorizationStatus={authorizationStatus}>
+              {favouriteListMemo.length > 0 ? (
+                <FavouritePage
+                  offers = {favouriteListMemo}
+                  authStatus = {authorizationStatus}
+                  userEmail = {userEmail}
+                />) : (
+                <FavouritePageEmpty authStatus={authorizationStatus} userEmail={userEmail}/>)}
             </PrivateRoute>
           }
         />

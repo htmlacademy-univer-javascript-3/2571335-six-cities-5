@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useState } from 'react';
+import { useMemo } from 'react';
 import { OfferDescription, OfferIdDescription } from '../../types/offerDescription.ts';
 import ReviewForm from '../../Components/ReviewForm/ReviewForm.tsx';
 import ReviewList from '../ReviewList/ReviewList.tsx';
@@ -8,24 +8,19 @@ import { CITY } from '../../mocks/city.ts';
 import UserHeaderInfo from '../UserInfoHeader/UserInfoHeader.tsx';
 import { useAppSelector } from '../../hooks/index.ts';
 import { CommentList } from '../../types/comment.ts';
-import { AuthorizationStatus } from '../../mocks/login.ts';
+import { AppRoute, AuthorizationStatus } from '../../mocks/login.ts';
 import { getAuthorizationStatus, getComments, getOffersNearby, getUserEmail } from '../../store/selectors.ts';
 import { store } from '../../store/index.ts';
 import { setFavourites } from '../../store/apiActions.ts';
+import { Link } from 'react-router-dom';
 
 function OfferPage({ offer, offerList, city}: {offer:OfferIdDescription ; offerList:OfferDescription[]; city:string}):JSX.Element{
-  const [selectedPoint, setSelectedPoint] = useState<OfferDescription | undefined>(undefined);
 
   const authStatus = useAppSelector(getAuthorizationStatus);
   const authStatusMemo = useMemo(() => authStatus,[authStatus]);
 
   const userEmail = useAppSelector(getUserEmail);
   const userEmailMemo = useMemo(() => userEmail,[userEmail]);
-
-  const handleListItemHover = useCallback((listItemId: string) => {
-    const currentPoint = offerList.find((o) => o.id.toString() === listItemId);
-    setSelectedPoint(currentPoint);
-  },[offerList]);
 
   const nearOffers = useAppSelector(getOffersNearby);
   const nearbyOffers = useMemo(() => nearOffers, [nearOffers]);
@@ -36,7 +31,8 @@ function OfferPage({ offer, offerList, city}: {offer:OfferIdDescription ; offerL
     event.preventDefault();
     const favouriteInfo = {
       offerId:offer.id,
-      status: offer.isFavorite ? 0 : 1
+      status: offer.isFavorite ? 0 : 1,
+      isOfferPage: true
     };
     store.dispatch(setFavourites(favouriteInfo));
   };
@@ -67,12 +63,21 @@ function OfferPage({ offer, offerList, city}: {offer:OfferIdDescription ; offerL
                 <h1 className="offer__name">
                   {offer.title}
                 </h1>
-                <button className={offer.isFavorite ? 'offer__bookmark-button offer__bookmark-button--active button' : 'offer__bookmark-button button'} type="button" onClick={handleFavouriteClick}>
-                  <svg className="offer__bookmark-icon" width="31" height="33">
-                    <use xlinkHref="#icon-bookmark"></use>
-                  </svg>
-                  <span className="visually-hidden">{offer.isFavorite ? 'In bookmark' : 'To bookmark'}</span>
-                </button>
+                {authStatus === AuthorizationStatus.Auth ?
+                  <button className={offer.isFavorite ? 'offer__bookmark-button offer__bookmark-button--active button' : 'offer__bookmark-button button'} type="button" onClick={handleFavouriteClick}>
+                    <svg className="offer__bookmark-icon" width="31" height="33">
+                      <use xlinkHref="#icon-bookmark"></use>
+                    </svg>
+                    <span className="visually-hidden">{offer.isFavorite ? 'In bookmark' : 'To bookmark'}</span>
+                  </button> :
+                  <button className={'offer__bookmark-button button'} type="button">
+                    <Link to = {AppRoute.Login}>
+                      <svg className="offer__bookmark-icon" width="31" height="33">
+                        <use xlinkHref="#icon-bookmark"></use>
+                      </svg>
+                    </Link>
+                    <span className="visually-hidden">To bookmarks</span>
+                  </button>}
               </div>
               <div className="offer__rating rating">
                 <div className="offer__stars rating__stars">
@@ -138,17 +143,17 @@ function OfferPage({ offer, offerList, city}: {offer:OfferIdDescription ; offerL
           <section className="offer__map map">
             <Map
               city={CITY.filter((c) => c.title === city)[0]}
-              selectedOffer={offerList.filter((i) => i.id === selectedPoint?.id)[0] }
+              selectedOffer={offerList.filter((i) => i.id === offer?.id)[0] }
               height={579}
               width={1144}
-              offerList={offerList}
+              offerList={nearOffers.slice(0,3).concat(offerList.filter((i) => i.id === offer.id))}
             />
           </section>
         </section>
         <div className="container">
           <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
-            <OfferList offer={nearbyOffers} onListItemHover={handleListItemHover} isMainPage = {false} city={city}/>
+            <OfferList offer={nearbyOffers.slice(0,3)} onListItemHover={()=>{}} isMainPage = {false} city={city}/>
           </section>
         </div>
       </main>

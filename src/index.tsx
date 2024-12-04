@@ -8,8 +8,8 @@ import {ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { getToken } from './services/token.ts';
 
-store.dispatch(fetchOffers());
 store.dispatch(checkAuthAction(getToken()));
+store.dispatch(fetchOffers());
 store.dispatch(getFavourites(getToken()));
 
 const root = ReactDOM.createRoot(

@@ -29,6 +29,7 @@ function MainPage({ offerList }: { offerList: OfferDescription[] }): JSX.Element
   const userEmailMemo = useMemo(() => userEmail, [userEmail]);
   const selectedFilterMemo = useMemo(() => selectedFilter,[selectedFilter]);
 
+
   const handleListItemHover = useCallback((listItemId: string) => {
     const currentPoint = offerList.find((point) => point.id === listItemId);
     if (currentPoint !== selectedPoint) {

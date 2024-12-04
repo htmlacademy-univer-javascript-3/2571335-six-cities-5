@@ -66,8 +66,7 @@ export const dataProcess = createSlice({
         state.isOffersLoading = true;
       })
 
-      .addCase(setFavourites.fulfilled, (state, action) => {
-        state.favouriteList = action.payload;
+      .addCase(setFavourites.fulfilled, (state) => {
         state.isOffersLoading = false;
       })
       .addCase(setFavourites.pending, (state) => {

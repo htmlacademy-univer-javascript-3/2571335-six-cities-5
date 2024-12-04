@@ -4,7 +4,7 @@ import {AppDispatch, State} from '../types/state.js';
 import {OfferDescription, OfferIdDescription} from '../types/offerDescription.js';
 import {redirectToRoute, fillUserEmail} from './cityAction.js';
 import {APIRoute} from '../mocks/apiRoutes.js';
-import {saveToken, dropToken} from '../services/token.ts';
+import {saveToken, dropToken, getToken} from '../services/token.ts';
 import {AuthData} from '../types/authData.ts';
 import {loginVerification, UserData} from '../types/userData.ts';
 import {AppRoute} from '../mocks/login.ts';
@@ -133,19 +133,20 @@ export const getFavourites = createAsyncThunk<OfferDescription[], string, {
 type setFavourite = {
   offerId: string;
   status:number;
+  isOfferPage: boolean;
 }
-export const setFavourites = createAsyncThunk<OfferDescription[], setFavourite, {
+export const setFavourites = createAsyncThunk<void, setFavourite, {
   dispatch: AppDispatch;
   state: State;
   extra: AxiosInstance;
 }>(
   'data/setFavourites',
-  async({offerId, status}, {extra : api}) => {
-    try{
-      const {data} = await api.post<OfferDescription[]>(`${APIRoute.FavouriteList}/${offerId}/${status}`);
-      return (data);
-    } catch (error){
-      return ([]);
+  async({offerId, status, isOfferPage}, {dispatch, extra : api}) => {
+    await api.post<OfferDescription[]>(`${APIRoute.FavouriteList}/${offerId}/${status}`);
+    dispatch(fetchOffers());
+    dispatch(getFavourites(getToken()));
+    if (isOfferPage){
+      dispatch(fetchOffer(offerId));
     }
   }
 );
