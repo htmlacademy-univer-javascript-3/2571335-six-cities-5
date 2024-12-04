@@ -54,7 +54,7 @@ function App(): JSX.Element {
         />
         <Route
           path = {AppRoute.Login}
-          element = {<LoginPage/>}
+          element = {authStatus === AuthorizationStatus.Auth ? <MainPage offerList={offerList}/> : <LoginPage/>}
         />
         <Route
           path = {AppRoute.Favourites}
