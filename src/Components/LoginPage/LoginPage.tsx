@@ -1,23 +1,19 @@
-import {useRef, FormEvent, useState} from 'react';
+import {useRef, FormEvent} from 'react';
 import React from 'react';
 import {useAppDispatch} from '../../hooks';
 import {loginAction} from '../../store/apiActions';
 import '../../../markup/css/errorMessage.css';
 import { AppRoute } from '../../mocks/login';
 import { Link } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 
 function LoginPage():JSX.Element{
   const loginRef = useRef<HTMLInputElement | null>(null);
   const passwordRef = useRef<HTMLInputElement | null>(null);
-  const [isPasswordError, setPasswordError] = useState<boolean>(false);
 
   const dispatch = useAppDispatch();
 
-  const showPasswordError = () => {
-    setPasswordError(true);
-    setTimeout(() =>setPasswordError(false), 2000);
-  };
   const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
     const letterMask = /[A-Za-z]/g;
@@ -31,7 +27,7 @@ function LoginPage():JSX.Element{
         }));
       }
       if (!isPasswordValid){
-        showPasswordError();
+        toast.error('write password with at least 1 letter and 1 number');
       }
     }
   };
@@ -80,10 +76,6 @@ function LoginPage():JSX.Element{
                 />
               </div>
               <button className="login__submit form__submit button" type="submit">Sign in</button>
-              {isPasswordError ?
-                <div className = "error-message">
-              write password with at least 1 letter and 1 number
-                </div> : null}
             </form>
           </section>
           <section className="locations locations--login locations--current">
