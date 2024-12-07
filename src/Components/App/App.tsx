@@ -14,6 +14,7 @@ import { useMemo } from 'react';
 import { getAuthorizationStatus, getCity, getFavourites, getOffer, getOfferList, getUserEmail, isLoading } from '../../store/selectors.ts';
 import MainEmpty from '../MainEmpty/MainEmpty.tsx';
 import FavouritePageEmpty from '../FavouritePageEmpty/FavouritePageEmpty.tsx';
+
 function App(): JSX.Element {
 
   const authStatus = useAppSelector(getAuthorizationStatus);
@@ -36,6 +37,7 @@ function App(): JSX.Element {
 
   const favouriteList = useAppSelector(getFavourites);
   const favouriteListMemo = useMemo(() => favouriteList, [favouriteList]);
+
 
   if (authorizationStatus === AuthorizationStatus.Unknown || isDataLoading) {
     return (
@@ -71,8 +73,8 @@ function App(): JSX.Element {
           }
         />
         <Route
-          path = {AppRoute.Offer}
-          element = {(offerList.filter((o) => o.id === offer.id).length) > 0 ? <OfferPage offer = {offer} offerList={offerList} city={city}/> : <NotFoundPage userEmail={userEmail} authStatus={authorizationStatus}/>}
+          path={`${AppRoute.Offer}`}
+          element={<OfferPage offer={offer} offerList={offerList} city={city} />}
         />
         <Route
           path = '*'

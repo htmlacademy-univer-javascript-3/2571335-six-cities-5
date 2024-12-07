@@ -11,8 +11,10 @@ import { CommentList } from '../../types/comment.ts';
 import { AppRoute, AuthorizationStatus } from '../../mocks/login.ts';
 import { getAuthorizationStatus, getComments, getOffersNearby, getUserEmail } from '../../store/selectors.ts';
 import { store } from '../../store/index.ts';
-import { setFavourites } from '../../store/apiActions.ts';
-import { Link } from 'react-router-dom';
+import { fetchComments, fetchOffer, fetchOfferNeibourhood, setFavourites } from '../../store/apiActions.ts';
+import { Link, useParams } from 'react-router-dom';
+import { emptyOffer } from '../../mocks/offer.ts';
+import NotFoundPage from '../NotFoundPage/NotFoundPage.tsx';
 
 function OfferPage({ offer, offerList, city}: {offer:OfferIdDescription ; offerList:OfferDescription[]; city:string}):JSX.Element{
 
@@ -27,6 +29,15 @@ function OfferPage({ offer, offerList, city}: {offer:OfferIdDescription ; offerL
 
   const commentList:CommentList = useAppSelector(getComments);
   const comments = useMemo(()=> commentList,[commentList]);
+
+  const { id } = useParams<{ id: string }>();
+  const isIdExist = offerList.filter((o) => o.id === id).length > 0;
+  if (isIdExist && offer === emptyOffer && id){
+    store.dispatch(fetchOffer(id));
+    store.dispatch(fetchComments(id));
+    store.dispatch(fetchOfferNeibourhood(id));
+  }
+
   const handleFavouriteClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
     const favouriteInfo = {
@@ -36,8 +47,8 @@ function OfferPage({ offer, offerList, city}: {offer:OfferIdDescription ; offerL
     };
     store.dispatch(setFavourites(favouriteInfo));
   };
-  return (
 
+  return isIdExist ? (
     <div className="page">
       <UserHeaderInfo authStatus={authStatusMemo} userEmail={userEmailMemo}/>
 
@@ -134,7 +145,7 @@ function OfferPage({ offer, offerList, city}: {offer:OfferIdDescription ; offerL
                 </div>
               </div>
               <section className="offer__reviews reviews">
-                <ReviewList guestReview = {comments}/>
+                <ReviewList guestReview = {[...comments].sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())}/>
                 {authStatus === AuthorizationStatus.Auth ? <ReviewForm/> : null}
               </section>
 
@@ -157,7 +168,6 @@ function OfferPage({ offer, offerList, city}: {offer:OfferIdDescription ; offerL
           </section>
         </div>
       </main>
-    </div>
-  );
+    </div>) : (<NotFoundPage userEmail={userEmail} authStatus={authStatus}/>);
 }
 export default (OfferPage);

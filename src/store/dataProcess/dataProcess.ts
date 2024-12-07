@@ -26,6 +26,7 @@ export const dataProcess = createSlice({
       })
       .addCase(fetchOffer.rejected, (state) => {
         state.offer = emptyOffer;
+        state.isOffersLoading = false;
       })
       .addCase(fetchOffer.pending, (state) => {
         state.isOffersLoading = true;
@@ -33,26 +34,30 @@ export const dataProcess = createSlice({
 
       .addCase(fetchOffers.fulfilled, (state, action) => {
         state.offerlist = action.payload;
+        state.isOffersLoading = false;
       })
       .addCase(fetchOfferNeibourhood.fulfilled, (state, action) => {
         state.nearbyOffers = action.payload;
+        state.isOffersLoading = false;
       })
 
       .addCase(fetchComments.fulfilled, (state, action) => {
         state.comments = action.payload;
+        state.isOffersLoading = false;
       })
       .addCase(fetchComments.rejected, (state) => {
         state.comments = [];
+        state.isOffersLoading = false;
       })
       .addCase(fetchComments.pending, (state) => {
         state.isOffersLoading = true;
       })
 
-      .addCase(postComment.fulfilled, (state, action) => {
-        state.comments = action.payload;
+      .addCase(postComment.fulfilled, (state) => {
+        state.isOffersLoading = false;
       })
       .addCase(postComment.rejected, (state) => {
-        state.comments = [];
+        state.isOffersLoading = false;
       })
       .addCase(postComment.pending, (state) => {
         state.isOffersLoading = true;

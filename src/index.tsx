@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import {Provider} from 'react-redux';
 import App from './Components/App/App.tsx';
-import {store} from './store';
+import {store} from './store/index.ts';
 import { checkAuthAction, fetchOffers, getFavourites } from './store/apiActions.ts';
 import {ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
