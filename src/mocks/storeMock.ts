@@ -100,3 +100,14 @@ export const fakeUser = {
   login: datatype.string(),
   password: datatype.string(),
 };
+export const commentMock = {
+  id: datatype.string(),
+  rating: datatype.number(),
+  comment: datatype.string()
+};
+
+export const setFavouriteMock = {
+  offerId: datatype.string(),
+  status: 1,
+  isOfferPage: false
+};
