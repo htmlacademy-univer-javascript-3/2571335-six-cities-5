@@ -7,7 +7,7 @@ import FavouritePage from '../FavouritePage/FavouritePage.tsx';
 import LoginPage from '../LoginPage/LoginPage.tsx';
 import PrivateRoute from '../PrivateRoute/PrivateRoute.tsx';
 import {useAppSelector} from '../../hooks';
-import LoadingScreen from '../LoadingPage/LoadingPage.tsx';
+import LoadingPage from '../LoadingPage/LoadingPage.tsx';
 import HistoryRouter from '../HistoryRouter/HistoryRouter.tsx';
 import browserHistory from '../../services/browserHistory.ts';
 import { useMemo } from 'react';
@@ -41,7 +41,7 @@ function App(): JSX.Element {
 
   if (authorizationStatus === AuthorizationStatus.Unknown || isDataLoading) {
     return (
-      <LoadingScreen />
+      <LoadingPage />
     );
   }
 
