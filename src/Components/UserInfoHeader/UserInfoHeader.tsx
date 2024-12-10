@@ -11,7 +11,7 @@ function UserHeaderInfo({authStatus, userEmail}:{authStatus:AuthorizationStatus;
   const favouriteCount = useAppSelector(getFavourites).length;
   return(
     <header className="header">
-      <div className="container">
+      <div className="container" data-testid = "user-info">
         <div className="header__wrapper">
           <div className="header__left">
             <a className="header__logo-link header__logo-link--active">
