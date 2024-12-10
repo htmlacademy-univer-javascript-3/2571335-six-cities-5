@@ -51,7 +51,7 @@ function LoginPage():JSX.Element{
           <section className="login">
             <h1 className="login__title">Sign in</h1>
             <form className="login__form form" action="#" method="post"
-              onSubmit={handleSubmit}
+              onSubmit={handleSubmit} data-testid = 'login-form'
             >
               <div className="login__input-wrapper form__input-wrapper">
                 <label className="visually-hidden">E-mail</label>
@@ -62,6 +62,7 @@ function LoginPage():JSX.Element{
                   name="email"
                   placeholder="Email"
                   required
+                  data-testid = 'email-input'
                 />
               </div>
               <div className="login__input-wrapper form__input-wrapper">
@@ -73,6 +74,7 @@ function LoginPage():JSX.Element{
                   name="password"
                   placeholder="Password"
                   required
+                  data-testid = 'password-input'
                 />
               </div>
               <button className="login__submit form__submit button" type="submit">Sign in</button>

@@ -85,9 +85,9 @@ export const mockCommentList = [{
 }];
 
 export const mockUser = {
-  authorizationStatus: AuthorizationStatus.Unknown,
+  authorizationStatus: AuthorizationStatus.NoAuth,
   userEmail: internet.email(),
-  isUserDataLoading: datatype.boolean()
+  isUserDataLoading: false
 };
 
 export const initialStateUserMock = {
