@@ -8,7 +8,7 @@ type FavouriteListProp = {
     cityList: string[];
 }
 function FavouriteList({offers, cityList}:FavouriteListProp){
-  const handleFavouriteStatusChange = (offerId:string) => {
+  const onFavouriteStatusChange = (offerId:string) => {
     const favouriteInfo = {
       offerId:offerId,
       status: 0,
@@ -30,7 +30,7 @@ function FavouriteList({offers, cityList}:FavouriteListProp){
             </div>
             <div className="favorites__places">
               {offers.filter((offerCity)=>offerCity.city.name === city).map((offer) => (
-                <FavouriteListCard offer = {offer} handleFavouriteStatusChange = {handleFavouriteStatusChange} key = {offer.id}/>
+                <FavouriteListCard offer = {offer} onFavouriteStatusChange = {onFavouriteStatusChange} key = {offer.id}/>
               ))}
             </div>
           </li>
