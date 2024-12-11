@@ -7,7 +7,7 @@ import { datatype } from 'faker';
 describe('Component: FavouriteList', () => {
   it('should render correctly', () => {
     const expectedTestId = 'favourite-list';
-    const cityList = [datatype.string(), datatype.string()]
+    const cityList = [datatype.string(), datatype.string()];
     const {withStoreComponent} = withStore(<FavouriteList offers = {mockOfferList} cityList={cityList} />);
     const preparedComponent = withHistory(withStoreComponent);
 

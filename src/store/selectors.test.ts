@@ -26,12 +26,12 @@ describe('UserProcess selectors', () => {
 describe('DataProcess selectors', () => {
   it('should return offerList from state', () => {
 
-    const offerList = mockOfferList
+    const offerList = mockOfferList;
     const offer = mockOffer;
     const isOffersLoading = true;
     const nearbyOffers = mockOfferList;
     const commentList = mockCommentList;
-    const favouriteList = mockOfferList
+    const favouriteList = mockOfferList;
 
     const state: DataProcess = {
       offerlist: offerList,
@@ -49,12 +49,12 @@ describe('DataProcess selectors', () => {
 
   it('should return offer from state', () => {
 
-    const offerList = mockOfferList
+    const offerList = mockOfferList;
     const offer = mockOffer;
     const isOffersLoading = true;
     const nearbyOffers = mockOfferList;
     const commentList = mockCommentList;
-    const favouriteList = mockOfferList
+    const favouriteList = mockOfferList;
 
     const state: DataProcess = {
       offerlist: offerList,
@@ -72,12 +72,12 @@ describe('DataProcess selectors', () => {
 
   it('should return isOffersLoading from state', () => {
 
-    const offerList = mockOfferList
+    const offerList = mockOfferList;
     const offer = mockOffer;
     const isOffersLoading = true;
     const nearbyOffers = mockOfferList;
     const commentList = mockCommentList;
-    const favouriteList = mockOfferList
+    const favouriteList = mockOfferList;
 
     const state: DataProcess = {
       offerlist: offerList,
@@ -95,12 +95,12 @@ describe('DataProcess selectors', () => {
 
   it('should return nearbyOffers from state', () => {
 
-    const offerList = mockOfferList
+    const offerList = mockOfferList;
     const offer = mockOffer;
     const isOffersLoading = true;
     const nearbyOffers = mockOfferList;
     const commentList = mockCommentList;
-    const favouriteList = mockOfferList
+    const favouriteList = mockOfferList;
 
     const state: DataProcess = {
       offerlist: offerList,
@@ -118,12 +118,12 @@ describe('DataProcess selectors', () => {
 
   it('should return comments from state', () => {
 
-    const offerList = mockOfferList
+    const offerList = mockOfferList;
     const offer = mockOffer;
     const isOffersLoading = true;
     const nearbyOffers = mockOfferList;
     const commentList = mockCommentList;
-    const favouriteList = mockOfferList
+    const favouriteList = mockOfferList;
 
     const state: DataProcess = {
       offerlist: offerList,
@@ -141,12 +141,12 @@ describe('DataProcess selectors', () => {
 
   it('should return favouriteList from state', () => {
 
-    const offerList = mockOfferList
+    const offerList = mockOfferList;
     const offer = mockOffer;
     const isOffersLoading = true;
     const nearbyOffers = mockOfferList;
     const commentList = mockCommentList;
-    const favouriteList = mockOfferList
+    const favouriteList = mockOfferList;
 
     const state: DataProcess = {
       offerlist: offerList,

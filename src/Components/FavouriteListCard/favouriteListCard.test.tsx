@@ -8,7 +8,7 @@ describe('Component: FavouriteListCard', () => {
   const mockHandleChange = vi.fn();
   it('should render correctly', () => {
     const expectedTestId = 'cardInfo';
-    const {withStoreComponent} = withStore(<FavouriteListCard  offer = {mockOfferList[0]}  handleFavouriteStatusChange={mockHandleChange}/>);
+    const {withStoreComponent} = withStore(<FavouriteListCard offer = {mockOfferList[0]} handleFavouriteStatusChange={mockHandleChange}/>);
     const preparedComponent = withHistory(withStoreComponent);
 
     render(preparedComponent);
@@ -19,7 +19,7 @@ describe('Component: FavouriteListCard', () => {
 
   });
   it('should call handleFavouriteStatusChange when press button', async () => {
-    const {withStoreComponent} = withStore(<FavouriteListCard  offer = {mockOfferList[0]}  handleFavouriteStatusChange={mockHandleChange}/>);
+    const {withStoreComponent} = withStore(<FavouriteListCard offer = {mockOfferList[0]} handleFavouriteStatusChange={mockHandleChange}/>);
     const preparedComponent = withHistory(withStoreComponent);
 
     render(preparedComponent);
@@ -28,5 +28,5 @@ describe('Component: FavouriteListCard', () => {
     expect(button).toBeInTheDocument();
     await userEvent.click(button);
     expect(mockHandleChange).toHaveBeenCalled();
-  })
+  });
 });

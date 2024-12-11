@@ -1,6 +1,6 @@
 import { OfferDescription } from '../../types/offerDescription';
 
-function FavouriteListCard({offer, handleFavouriteStatusChange}:{offer:OfferDescription, handleFavouriteStatusChange :(offerId: string) => void}){
+function FavouriteListCard({offer, handleFavouriteStatusChange}:{offer:OfferDescription; handleFavouriteStatusChange :(offerId: string) => void}){
 
   const onButtonClickHandler = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
