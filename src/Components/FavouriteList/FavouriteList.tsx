@@ -1,14 +1,23 @@
 import { OfferDescription } from '../../types/offerDescription';
 import FavouriteListCard from '../FavouriteListCard/FavouriteListCard';
+import { store } from '../../store';
+import { setFavourites } from '../../store/apiActions';
 
 type FavouriteListProp = {
     offers: OfferDescription[];
     cityList: string[];
 }
 function FavouriteList({offers, cityList}:FavouriteListProp){
-
+  const handleFavouriteStatusChange = (offerId:string) => {
+    const favouriteInfo = {
+      offerId:offerId,
+      status: 0,
+      isOfferPage: false
+    };
+    store.dispatch(setFavourites(favouriteInfo));
+  };
   return(
-    <ul className="favorites__list">
+    <ul className="favorites__list" data-testid = 'favourite-list'>
       {cityList.map((city)=>
         (
           <li className="favorites__locations-items" key = {city}>
@@ -21,7 +30,7 @@ function FavouriteList({offers, cityList}:FavouriteListProp){
             </div>
             <div className="favorites__places">
               {offers.filter((offerCity)=>offerCity.city.name === city).map((offer) => (
-                <FavouriteListCard {...offer} key = {offer.id}/>
+                <FavouriteListCard offer = {offer} handleFavouriteStatusChange = {handleFavouriteStatusChange} key = {offer.id}/>
               ))}
             </div>
           </li>

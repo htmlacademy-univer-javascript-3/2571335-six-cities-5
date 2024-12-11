@@ -20,7 +20,7 @@ function FavouritePage({ offers, authStatus, userEmail }: FavouritePageProps): J
     <div className="page">
       <UserHeaderInfo authStatus = {authStatus} userEmail = {userEmail}/>
       <main className="page__main page__main--favorites">
-        <div className="page__favorites-container container">
+        <div className="page__favorites-container container" data-testid = 'saved-list'>
           <section className="favorites">
             <h1 className="favorites__title">Saved listing</h1>
             <FavouriteList offers = {offers} cityList = {cityList}/>

@@ -9,6 +9,7 @@ import MockAdapter from 'axios-mock-adapter';
 import { State } from '../types/state';
 import { createAPI } from '../services/api';
 import { AppThunkDispatch } from './mocks.ts';
+import { dataProcessInitialStateMock, mockUser } from '../mocks/storeMock.ts';
 
 export function withHistory(component: JSX.Element, history?: MemoryHistory) {
   const memoryHistory = history ?? createMemoryHistory();
@@ -30,7 +31,11 @@ type ComponentWithMockStore = {
 
 export function withStore(
   component: JSX.Element,
-  initialState: Partial<State> = {},
+  initialState: Partial<State> = {
+    User: mockUser,
+    Data: dataProcessInitialStateMock,
+    City:{city: 'Paris'}
+  },
 ): ComponentWithMockStore {
   const axios = createAPI();
   const mockAxiosAdapter = new MockAdapter(axios);
