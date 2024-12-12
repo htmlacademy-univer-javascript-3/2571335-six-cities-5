@@ -34,31 +34,34 @@ function Map(props: MapProps): JSX.Element {
   const map = useMap(mapRef, city);
 
   useEffect(() => {
-    if (map) {
-      map.setView([city.lat, city.lng], city.zoom);
-      const markerLayer = layerGroup().addTo(map);
-      offerList.forEach((point) => {
-        const marker = new Marker({
-          lat: point.location.latitude,
-          lng: point.location.longitude
+    let isMounted = true;
+    if (isMounted){
+      if (map) {
+        map.setView([city.lat, city.lng], city.zoom);
+        const markerLayer = layerGroup().addTo(map);
+        offerList.forEach((point) => {
+          const marker = new Marker({
+            lat: point.location.latitude,
+            lng: point.location.longitude
+          });
+
+          marker
+            .setIcon(
+              selectedOffer !== undefined && point.id === selectedOffer.id
+                ? currentCustomIcon
+                : defaultCustomIcon
+            )
+            .addTo(markerLayer);
         });
-
-        marker
-          .setIcon(
-            selectedOffer !== undefined && point.id === selectedOffer.id
-              ? currentCustomIcon
-              : defaultCustomIcon
-          )
-          .addTo(markerLayer);
-      });
-
-      return () => {
-        map.removeLayer(markerLayer);
-      };
+        return () => {
+          map.removeLayer(markerLayer);
+          isMounted = false;
+        };
+      }
     }
   }, [map, offerList, selectedOffer, city.zoom, city.lat, city.lng]);
 
-  return <div style={{ height: `${height}px`, width: `${width}px`, margin: '0 auto' }} ref={mapRef}></div>;
+  return <div style={{ height: `${height}px`, width: `${width}px`, margin: '0 auto' }} ref={mapRef} data-testid = 'map-test'></div>;
 }
 
 export default React.memo(Map);

@@ -238,7 +238,7 @@ describe('Application Routing', () => {
   it('should render "NotFoundPage" when route is incorrect', () => {
     const withHistoryComponent = withHistory(<App />, mockHistory);
     const { withStoreComponent } = withStore(withHistoryComponent, makeFakeStore());
-    const unknownRoute = datatype.string();
+    const unknownRoute = 'unknownRoute';
     mockHistory.push(`/${unknownRoute}`);
     const expectedText = 'Error 404. Page not found.';
 

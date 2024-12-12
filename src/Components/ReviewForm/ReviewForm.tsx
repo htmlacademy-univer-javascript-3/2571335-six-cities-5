@@ -1,10 +1,10 @@
 import React, { FormEvent, useEffect, useRef, useState } from 'react';
-import { postComment } from '../../store/apiActions.ts';
-import { useAppDispatch, useAppSelector } from '../../hooks/index.ts';
+import { useAppSelector } from '../../hooks/index.ts';
 import { offerIsLoadingStatus } from '../../store/selectors.ts';
+import { CommentPost } from '../../types/comment.ts';
 
 
-function ReviewForm(){
+function ReviewForm({onFormSubmit}:{onFormSubmit: (commentPayload : CommentPost) => void}){
   const [rating, setRatingStar] = useState<number>(0);
   const [isFormDisabled, setFormDisabled] = useState<boolean>(false);
 
@@ -13,7 +13,6 @@ function ReviewForm(){
   const commentRef = useRef<HTMLTextAreaElement | null>(null);
   const isReviewLoading = useAppSelector(offerIsLoadingStatus);
 
-  const dispatch = useAppDispatch();
   const offerId = useAppSelector((state) => state.Data.offer.id);
 
   const handleRatingChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -35,16 +34,14 @@ function ReviewForm(){
     evt.preventDefault();
     setFormDisabled(true);
 
-    const submitComment = async () => {
+    const submitComment = () => {
       if (commentRef.current && rating > 0) {
         try {
-          await dispatch(
-            postComment({
-              rating: rating,
-              comment: commentRef.current.value,
-              id: offerId,
-            })
-          ).unwrap();
+          onFormSubmit({
+            rating : rating,
+            comment : commentRef.current.value,
+            id : offerId,
+          });
 
           setRatingStar(0);
           if (commentRef.current) {
@@ -59,7 +56,13 @@ function ReviewForm(){
   };
 
   useEffect(()=>{
-    handleButtonStatus();
+    let isMounted = true;
+    if (isMounted){
+      handleButtonStatus();
+    }
+    return () => {
+      isMounted = false;
+    };
   },[rating, isReviewLoading]);
   return(
 
@@ -67,7 +70,7 @@ function ReviewForm(){
       onSubmit={handleSubmit} data-testid = "review-form"
     >
       <label className="reviews__label form__label" htmlFor="review">Your review</label>
-      <div className="reviews__rating-form form__rating">
+      <div className="reviews__rating-form form__rating" data-testid = 'stars-container'>
         <input className="form__rating-input visually-hidden" name="rating" value="5" id="5-stars" type="radio"
           onChange = {handleRatingChange}
           disabled = {isFormDisabled}

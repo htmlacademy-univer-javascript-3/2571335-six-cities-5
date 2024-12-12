@@ -13,7 +13,7 @@ import { getAuthorizationStatus, getCity, getFavourites, getOffer, getOfferList,
 import MainEmpty from '../MainEmpty/MainEmpty.tsx';
 import FavouritePageEmpty from '../FavouritePageEmpty/FavouritePageEmpty.tsx';
 import {useAppDispatch} from '../../hooks';
-import { loginAction } from '../../store/apiActions.ts';
+import { loginAction, setFavourites } from '../../store/apiActions.ts';
 
 function App(): JSX.Element {
 
@@ -46,13 +46,21 @@ function App(): JSX.Element {
       <LoadingPage />
     );
   }
-  const onLoginFormSubmit = (login:string, password:string) => {
+  const onLoginFormSubmit = (login : string, password:string) => {
     dispatch(loginAction({
       login: login,
       password: password
     }));
   };
 
+  const onFavouriteClick = (id : string, status : number, isOfferPage : boolean) => {
+    const favouriteInfo = {
+      offerId:id,
+      status: status,
+      isOfferPage: isOfferPage
+    };
+    dispatch(setFavourites(favouriteInfo));
+  };
   return(
     <Routes>
       <Route
@@ -81,7 +89,7 @@ function App(): JSX.Element {
       />
       <Route
         path={`${AppRoute.Offer}`}
-        element={<OfferPage offer={offer} offerList={offerList} city={city} />}
+        element={<OfferPage offer={offer} offerList={offerList} city={city} onFavouriteClick = {onFavouriteClick}/>}
       />
       <Route
         path = '*'

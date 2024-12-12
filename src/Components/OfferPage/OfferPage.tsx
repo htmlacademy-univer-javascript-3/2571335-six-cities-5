@@ -7,16 +7,16 @@ import Map from '../Map/Map.tsx';
 import { CITY } from '../../mocks/city.ts';
 import UserHeaderInfo from '../UserInfoHeader/UserInfoHeader.tsx';
 import { useAppSelector } from '../../hooks/index.ts';
-import { CommentList } from '../../types/comment.ts';
+import { CommentList, CommentPost } from '../../types/comment.ts';
 import { AppRoute, AuthorizationStatus } from '../../mocks/login.ts';
 import { getAuthorizationStatus, getComments, getOffersNearby, getUserEmail } from '../../store/selectors.ts';
 import { store } from '../../store/index.ts';
-import { fetchComments, fetchOffer, fetchOfferNeibourhood, setFavourites } from '../../store/apiActions.ts';
+import { fetchComments, fetchOffer, fetchOfferNeibourhood, postComment } from '../../store/apiActions.ts';
 import { Link, useParams } from 'react-router-dom';
 import { emptyOffer } from '../../mocks/offer.ts';
 import NotFoundPage from '../NotFoundPage/NotFoundPage.tsx';
 
-function OfferPage({ offer, offerList, city}: {offer:OfferIdDescription ; offerList:OfferDescription[]; city:string}):JSX.Element{
+function OfferPage({ offer, offerList, city, onFavouriteClick}: {offer:OfferIdDescription ; offerList:OfferDescription[]; city:string; onFavouriteClick: (id : string, status : number, isOfferPage : boolean)=> void}):JSX.Element{
 
   const authStatus = useAppSelector(getAuthorizationStatus);
   const authStatusMemo = useMemo(() => authStatus,[authStatus]);
@@ -40,12 +40,21 @@ function OfferPage({ offer, offerList, city}: {offer:OfferIdDescription ; offerL
 
   const handleFavouriteClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
-    const favouriteInfo = {
-      offerId:offer.id,
-      status: offer.isFavorite ? 0 : 1,
-      isOfferPage: true
-    };
-    store.dispatch(setFavourites(favouriteInfo));
+    onFavouriteClick(
+      offer.id,
+      offer.isFavorite ? 0 : 1,
+      true
+    );
+  };
+
+  const onFormSubmit = (commentPayload : CommentPost) => {
+    store.dispatch(
+      postComment({
+        rating: commentPayload.rating,
+        comment: commentPayload.comment,
+        id: commentPayload.id,
+      })
+    ).unwrap();
   };
 
   return isIdExist ? (
@@ -75,7 +84,7 @@ function OfferPage({ offer, offerList, city}: {offer:OfferIdDescription ; offerL
                   {offer.title}
                 </h1>
                 {authStatus === AuthorizationStatus.Auth ?
-                  <button className={offer.isFavorite ? 'offer__bookmark-button offer__bookmark-button--active button' : 'offer__bookmark-button button'} type="button" onClick={handleFavouriteClick}>
+                  <button className={offer.isFavorite ? 'offer__bookmark-button offer__bookmark-button--active button' : 'offer__bookmark-button button'} type="button" onClick={handleFavouriteClick} data-testid = 'favourite-button'>
                     <svg className="offer__bookmark-icon" width="31" height="33">
                       <use xlinkHref="#icon-bookmark"></use>
                     </svg>
@@ -146,7 +155,7 @@ function OfferPage({ offer, offerList, city}: {offer:OfferIdDescription ; offerL
               </div>
               <section className="offer__reviews reviews" data-testid = "reviews">
                 <ReviewList guestReview = {[...comments].sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())}/>
-                {authStatus === AuthorizationStatus.Auth ? <ReviewForm/> : null}
+                {authStatus === AuthorizationStatus.Auth ? <ReviewForm onFormSubmit={onFormSubmit}/> : null}
               </section>
 
             </div>

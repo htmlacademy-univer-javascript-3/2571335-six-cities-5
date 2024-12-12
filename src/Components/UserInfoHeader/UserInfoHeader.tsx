@@ -24,7 +24,7 @@ function UserHeaderInfo({authStatus, userEmail}:{authStatus:AuthorizationStatus;
             <ul className="header__nav-list">
               {
                 authStatus === AuthorizationStatus.Auth ?
-                  <li className="header__nav-item user">
+                  <li className="header__nav-item user" data-testId = "item-for-auth">
                     <Link className="header__nav-link header__nav-link--profile" to={AppRoute.Favourites}>
                       <div className="header__avatar-wrapper user__avatar-wrapper"></div>
                       <span className="header__user-name user__name">{userEmail}</span>

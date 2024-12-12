@@ -12,7 +12,7 @@ function OfferList(OfferListProps:OfferListProps){
   const { onListItemHover, offer , isMainPage,city} = OfferListProps;
 
   return(
-    <div className={isMainPage ? 'cities__places-list places__list tabs__content' : 'near-places__list places__list'}>
+    <div className={isMainPage ? 'cities__places-list places__list tabs__content' : 'near-places__list places__list'} data-testid = 'offerlist-test'>
       {offer.filter((i)=>i.city.name === city).map((offerItem) => (
         <MainPageCard
           key={offerItem.id}

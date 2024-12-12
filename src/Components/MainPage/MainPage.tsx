@@ -49,7 +49,7 @@ function MainPage({ offerList }: { offerList: OfferDescription[] }): JSX.Element
       <main className="page__main page__main--index">
         <h1 className="visually-hidden">Cities</h1>
         <div className="tabs">
-          <section className="locations container" data-testid="citylist">
+          <section className="locations container" data-testid = 'citylist'>
             <CityList/>
           </section>
         </div>
@@ -58,7 +58,7 @@ function MainPage({ offerList }: { offerList: OfferDescription[] }): JSX.Element
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
               <b className="places__found">{offerList.filter((i)=> i.city.name === cityName).length} places to stay in {cityName}</b>
-              <form className="places__sorting" action="#" method="get">
+              <form className="places__sorting" action="#" method="get" data-testid = 'filter-form'>
                 <SortFilter filter={selectedFilterMemo} handleFilterEnter={handleFilterEnter} />
               </form>
               <div className="cities__places-list places__list tabs__content">
