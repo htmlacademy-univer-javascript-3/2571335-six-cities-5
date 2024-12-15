@@ -1,4 +1,4 @@
-import {City} from '../types/points';
+import {City} from '../types/points.ts';
 
 export const CITY: City[] = [
   {

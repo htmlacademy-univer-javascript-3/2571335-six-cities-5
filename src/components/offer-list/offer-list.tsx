@@ -1,0 +1,27 @@
+import { OfferDescription } from '../../types/offer-description.ts';
+import MainPageCard from '../main-page-card/main-page-card.tsx';
+
+type OfferListProps = {
+  onListItemHover: (listItemName: string) => void;
+  offer:OfferDescription[];
+  isMainPage:boolean;
+  city:string;
+};
+
+function OfferList(OfferListProps:OfferListProps){
+  const { onListItemHover, offer , isMainPage,city} = OfferListProps;
+
+  return(
+    <div className={isMainPage ? 'cities__places-list places__list tabs__content' : 'near-places__list places__list'} data-testid = 'offerlist-test'>
+      {offer.filter((i)=>i.city.name === city).map((offerItem) => (
+        <MainPageCard
+          key={offerItem.id}
+          offer={offerItem}
+          onListItemHover={onListItemHover}
+          isMainPage={isMainPage}
+        />
+      ))}
+    </div>
+  );
+}
+export default (OfferList);
