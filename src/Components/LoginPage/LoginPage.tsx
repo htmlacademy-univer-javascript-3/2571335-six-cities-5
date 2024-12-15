@@ -4,12 +4,13 @@ import '../../../markup/css/errorMessage.css';
 import { AppRoute } from '../../mocks/login';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import { CITY } from '../../mocks/city';
 
 
-function LoginPage({onLoginFormSubmit}:{onLoginFormSubmit : (login:string,password:string) => void}):JSX.Element{
+function LoginPage({onLoginFormSubmit, onRandomCityClick}:{onLoginFormSubmit : (login:string,password:string) => void; onRandomCityClick : (cityNumber: number) => void}):JSX.Element{
   const loginRef = useRef<HTMLInputElement | null>(null);
   const passwordRef = useRef<HTMLInputElement | null>(null);
-
+  const randomCityNumber = Math.round(Math.random() * 5);
   const handleSubmit = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
     const letterMask = /[A-Za-z]/g;
@@ -23,6 +24,10 @@ function LoginPage({onLoginFormSubmit}:{onLoginFormSubmit : (login:string,passwo
         toast.error('write password with at least 1 letter and 1 number');
       }
     }
+  };
+  const handleRandomCityClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+    onRandomCityClick(randomCityNumber);
   };
 
   return(
@@ -75,9 +80,9 @@ function LoginPage({onLoginFormSubmit}:{onLoginFormSubmit : (login:string,passwo
           </section>
           <section className="locations locations--login locations--current">
             <div className="locations__item">
-              <a className="locations__item-link" href="#">
-                <span>Amsterdam</span>
-              </a>
+              <Link className="locations__item-link" to = {AppRoute.Main}>
+                <span onClick = {handleRandomCityClick} data-testid = 'randomCitySpan'>{CITY[randomCityNumber].title}</span>
+              </Link>
             </div>
           </section>
         </div>

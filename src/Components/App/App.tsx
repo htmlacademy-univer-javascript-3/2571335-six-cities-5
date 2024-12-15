@@ -1,4 +1,4 @@
-import {Route, Routes} from 'react-router-dom';
+import { Route, Routes} from 'react-router-dom';
 import {AppRoute, AuthorizationStatus} from '../../mocks/login';
 import MainPage from '../MainPage/MainPage.tsx';
 import NotFoundPage from '../NotFoundPage/NotFoundPage.tsx';
@@ -14,6 +14,9 @@ import MainEmpty from '../MainEmpty/MainEmpty.tsx';
 import FavouritePageEmpty from '../FavouritePageEmpty/FavouritePageEmpty.tsx';
 import {useAppDispatch} from '../../hooks';
 import { loginAction, setFavourites } from '../../store/apiActions.ts';
+import { changeCityAction } from '../../store/cityProcess/cityProcess.ts';
+import { CITY } from '../../mocks/city.ts';
+import { redirectToRoute } from '../../store/cityAction.ts';
 
 function App(): JSX.Element {
 
@@ -53,6 +56,11 @@ function App(): JSX.Element {
     }));
   };
 
+  const onRandomCityClick = (cityNumber: number) => {
+    dispatch(changeCityAction(CITY[cityNumber].title));
+    dispatch(redirectToRoute(AppRoute.Main));
+  };
+
   const onFavouriteClick = (id : string, status : number, isOfferPage : boolean) => {
     const favouriteInfo = {
       offerId:id,
@@ -71,7 +79,7 @@ function App(): JSX.Element {
       />
       <Route
         path = {AppRoute.Login}
-        element = {authStatus === AuthorizationStatus.Auth ? <MainPage offerList={offerList}/> : <LoginPage onLoginFormSubmit={onLoginFormSubmit}/>}
+        element = {authStatus === AuthorizationStatus.Auth ? <MainPage offerList={offerList}/> : <LoginPage onLoginFormSubmit={onLoginFormSubmit} onRandomCityClick={onRandomCityClick}/>}
       />
       <Route
         path = {AppRoute.Favourites}

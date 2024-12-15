@@ -116,7 +116,7 @@ function OfferPage({ offer, offerList, city, onFavouriteClick}: {offer:OfferIdDe
                 <li className="offer__feature offer__feature--entire">
                   Max {offer.maxAdults} Adults
                 </li>
-                )
+
 
               </ul>
               <div className="offer__price">
