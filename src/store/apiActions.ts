@@ -6,7 +6,7 @@ import {redirectToRoute} from './cityAction.js';
 import {APIRoute} from '../mocks/apiRoutes.js';
 import {saveToken, dropToken, getToken} from '../services/token.ts';
 import {AuthData} from '../types/authData.ts';
-import {loginVerification, UserData} from '../types/userData.ts';
+import {LoginVerification, UserData} from '../types/userData.ts';
 import {AppRoute} from '../mocks/login.ts';
 import { Comment, CommentList, CommentPost } from '../types/comment.ts';
 
@@ -42,7 +42,7 @@ export const checkAuthAction = createAsyncThunk<string, string, {
 }>(
   'user/checkAuth',
   async (token, {extra: api}) => {
-    const {data: {email}} = await api.get<loginVerification>(APIRoute.Login,{params:{'X-Token':token}});
+    const {data: {email}} = await api.get<LoginVerification>(APIRoute.Login,{params:{'X-Token':token}});
     return email;
   },
 );

@@ -3,7 +3,7 @@ export type UserData = {
     email: string;
     token: string;
   };
-export type loginVerification = {
+export type LoginVerification = {
   name: string;
   avatarUrl: string;
   isPro: boolean;
