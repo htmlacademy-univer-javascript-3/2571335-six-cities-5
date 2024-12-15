@@ -1,9 +1,10 @@
 import axios, {AxiosInstance, AxiosResponse, InternalAxiosRequestConfig} from 'axios';
 import {toast} from 'react-toastify';
 import { AxiosError} from 'axios';
-import {getToken} from './token';
 import { StatusCodes } from 'http-status-codes';
-import { APIRoute } from '../mocks/apiRoutes';
+
+import {getToken} from './token.ts';
+import { APIRoute } from '../mocks/api-routes.ts';
 
 
 type DetailMessageType = {
