@@ -9,7 +9,7 @@ function CityList(){
   const cityName = useAppSelector(getCity);
 
   return (
-    <ul className="locations__list tabs__list">
+    <ul className="locations__list tabs__list" data-testid = 'cityList'>
       {CITY.map((c)=>(
         <li key = {c.lat} className="locations__item">
           <a className={c.title === cityName ? 'locations__item-link tabs__item tabs__item--active' : 'locations__item-link tabs__item'}

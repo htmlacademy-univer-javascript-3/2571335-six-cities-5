@@ -43,6 +43,7 @@ function MainPageCard({ offer, onListItemHover, isMainPage}: MainPageCardProps):
     <article className={isMainPage ? 'cities__card place-card' : 'near-places__card place-card'}
       onMouseEnter={handleListItemHover}
       onMouseLeave={handleListItemLeave}
+      data-testid = 'mainpagecard-test'
     >
       {offer.isPremium ? (
         <div className="place-card__mark">

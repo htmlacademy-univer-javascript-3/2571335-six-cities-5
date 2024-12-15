@@ -1,30 +1,23 @@
-import {useRef, FormEvent} from 'react';
+import {useRef} from 'react';
 import React from 'react';
-import {useAppDispatch} from '../../hooks';
-import {loginAction} from '../../store/apiActions';
 import '../../../markup/css/errorMessage.css';
 import { AppRoute } from '../../mocks/login';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
 
-function LoginPage():JSX.Element{
+function LoginPage({onLoginFormSubmit}:{onLoginFormSubmit : (login:string,password:string) => void}):JSX.Element{
   const loginRef = useRef<HTMLInputElement | null>(null);
   const passwordRef = useRef<HTMLInputElement | null>(null);
 
-  const dispatch = useAppDispatch();
-
-  const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
-    evt.preventDefault();
+  const handleSubmit = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
     const letterMask = /[A-Za-z]/g;
     const numberMask = /[0-9]/g;
     if (passwordRef.current !== null){
       const isPasswordValid = letterMask.test(passwordRef.current.value) && numberMask.test(passwordRef.current.value);
       if (loginRef.current !== null && isPasswordValid) {
-        dispatch(loginAction({
-          login: loginRef.current.value,
-          password: passwordRef.current.value
-        }));
+        onLoginFormSubmit(loginRef.current.value,passwordRef.current.value);
       }
       if (!isPasswordValid){
         toast.error('write password with at least 1 letter and 1 number');
@@ -51,7 +44,7 @@ function LoginPage():JSX.Element{
           <section className="login">
             <h1 className="login__title">Sign in</h1>
             <form className="login__form form" action="#" method="post"
-              onSubmit={handleSubmit} data-testid = 'login-form'
+              data-testid = 'login-form'
             >
               <div className="login__input-wrapper form__input-wrapper">
                 <label className="visually-hidden">E-mail</label>
@@ -77,7 +70,7 @@ function LoginPage():JSX.Element{
                   data-testid = 'password-input'
                 />
               </div>
-              <button className="login__submit form__submit button" type="submit">Sign in</button>
+              <button className="login__submit form__submit button" type="submit" onClick={handleSubmit}>Sign in</button>
             </form>
           </section>
           <section className="locations locations--login locations--current">

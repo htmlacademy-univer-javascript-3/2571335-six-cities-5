@@ -12,8 +12,12 @@ import { useMemo } from 'react';
 import { getAuthorizationStatus, getCity, getFavourites, getOffer, getOfferList, getUserEmail, isLoading } from '../../store/selectors.ts';
 import MainEmpty from '../MainEmpty/MainEmpty.tsx';
 import FavouritePageEmpty from '../FavouritePageEmpty/FavouritePageEmpty.tsx';
+import {useAppDispatch} from '../../hooks';
+import { loginAction, setFavourites } from '../../store/apiActions.ts';
 
 function App(): JSX.Element {
+
+  const dispatch = useAppDispatch();
 
   const authStatus = useAppSelector(getAuthorizationStatus);
   const authorizationStatus = useMemo(() => authStatus,[authStatus]);
@@ -42,7 +46,21 @@ function App(): JSX.Element {
       <LoadingPage />
     );
   }
+  const onLoginFormSubmit = (login : string, password:string) => {
+    dispatch(loginAction({
+      login: login,
+      password: password
+    }));
+  };
 
+  const onFavouriteClick = (id : string, status : number, isOfferPage : boolean) => {
+    const favouriteInfo = {
+      offerId:id,
+      status: status,
+      isOfferPage: isOfferPage
+    };
+    dispatch(setFavourites(favouriteInfo));
+  };
   return(
     <Routes>
       <Route
@@ -53,7 +71,7 @@ function App(): JSX.Element {
       />
       <Route
         path = {AppRoute.Login}
-        element = {authStatus === AuthorizationStatus.Auth ? <MainPage offerList={offerList}/> : <LoginPage/>}
+        element = {authStatus === AuthorizationStatus.Auth ? <MainPage offerList={offerList}/> : <LoginPage onLoginFormSubmit={onLoginFormSubmit}/>}
       />
       <Route
         path = {AppRoute.Favourites}
@@ -71,7 +89,7 @@ function App(): JSX.Element {
       />
       <Route
         path={`${AppRoute.Offer}`}
-        element={<OfferPage offer={offer} offerList={offerList} city={city} />}
+        element={<OfferPage offer={offer} offerList={offerList} city={city} onFavouriteClick = {onFavouriteClick}/>}
       />
       <Route
         path = '*'
