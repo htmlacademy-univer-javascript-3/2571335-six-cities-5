@@ -2,7 +2,7 @@ import { render, screen } from '@testing-library/react';
 import { useRef } from 'react';
 import useMap from './use-map.tsx';
 import { City } from '../types/points.ts';
-import { CITY } from '../mocks/city.ts';
+import { CITIES } from '../mocks/city.ts';
 
 const TestComponent = (city : City) => {
   const mapRef = useRef(null);
@@ -22,7 +22,7 @@ describe('useMap', () => {
   it('should render map correctly', () => {
     const notExpectedText = 'Карта не инициализирована';
 
-    render(<TestComponent {...CITY[0]} />);
+    render(<TestComponent {...CITIES[0]} />);
 
     const textElement = screen.queryByText(notExpectedText);
     expect(textElement).not.toBeInTheDocument();

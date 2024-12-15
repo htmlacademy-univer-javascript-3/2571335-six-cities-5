@@ -6,7 +6,7 @@ import ReviewForm from '../../components/review-form/review-form.tsx';
 import ReviewList from '../../components/review-list/review-list.tsx';
 import OfferList from '../../components/offer-list/offer-list.tsx';
 import Map from '../../components/map/map.tsx';
-import { CITY } from '../../mocks/city.ts';
+import { CITIES } from '../../mocks/city.ts';
 import UserHeaderInfo from '../../components/user-info-header/user-info-header.tsx';
 import { useAppSelector } from '../../hooks/index.ts';
 import { CommentList, CommentPost } from '../../types/comment.ts';
@@ -155,7 +155,7 @@ function OfferPage({ offer, offerList, city, onFavouriteClick}: {offer:OfferIdDe
                 </div>
               </div>
               <section className="offer__reviews reviews" data-testid = "reviews">
-                <ReviewList guestReview = {[...comments].sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())}/>
+                <ReviewList guestReviews = {[...comments].sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())}/>
                 {authStatus === AuthorizationStatus.Auth ? <ReviewForm onFormSubmit={onFormSubmit}/> : null}
               </section>
 
@@ -163,7 +163,7 @@ function OfferPage({ offer, offerList, city, onFavouriteClick}: {offer:OfferIdDe
           </div>
           <section className="offer__map map" data-testid = "map">
             <Map
-              city={CITY.filter((c) => c.title === city)[0]}
+              city={CITIES.filter((c) => c.title === city)[0]}
               selectedOffer={offerList.filter((i) => i.id === offer?.id)[0] }
               height={579}
               width={1144}

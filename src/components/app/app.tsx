@@ -16,7 +16,7 @@ import FavouritePageEmpty from '../../pages/favourite-page-empty/favourite-page-
 import {useAppDispatch} from '../../hooks/index.ts';
 import { loginAction, setFavourites } from '../../store/api-actions.ts';
 import { changeCityAction } from '../../store/city-process/city-process.ts';
-import { CITY } from '../../mocks/city.ts';
+import { CITIES } from '../../mocks/city.ts';
 import { redirectToRoute } from '../../store/city-action.ts';
 
 function App(): JSX.Element {
@@ -58,7 +58,7 @@ function App(): JSX.Element {
   };
 
   const onRandomCityClick = (cityNumber: number) => {
-    dispatch(changeCityAction(CITY[cityNumber].title));
+    dispatch(changeCityAction(CITIES[cityNumber].title));
     dispatch(redirectToRoute(AppRoute.Main));
   };
 

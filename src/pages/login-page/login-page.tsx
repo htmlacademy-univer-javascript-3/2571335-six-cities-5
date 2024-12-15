@@ -4,7 +4,7 @@ import { toast } from 'react-toastify';
 import { Link } from 'react-router-dom';
 
 import { AppRoute } from '../../mocks/login.ts';
-import { CITY } from '../../mocks/city.ts';
+import { CITIES } from '../../mocks/city.ts';
 
 
 function LoginPage({onLoginFormSubmit, onRandomCityClick}:{onLoginFormSubmit : (login:string,password:string) => void; onRandomCityClick : (cityNumber: number) => void}):JSX.Element{
@@ -81,7 +81,7 @@ function LoginPage({onLoginFormSubmit, onRandomCityClick}:{onLoginFormSubmit : (
           <section className="locations locations--login locations--current">
             <div className="locations__item">
               <Link className="locations__item-link" to = {AppRoute.Main}>
-                <span onClick = {handleRandomCityClick} data-testid = 'randomCitySpan'>{CITY[randomCityNumber].title}</span>
+                <span onClick = {handleRandomCityClick} data-testid = 'randomCitySpan'>{CITIES[randomCityNumber].title}</span>
               </Link>
             </div>
           </section>

@@ -3,12 +3,12 @@ import React from 'react';
 import Review from '../review/review.tsx';
 import { Comment } from '../../types/comment.ts';
 
-function ReviewList({guestReview}:{guestReview:Comment[]}){
+function ReviewList({guestReviews}:{guestReviews:Comment[]}){
   return(
     <>
-      <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{guestReview.length}</span></h2>
+      <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{guestReviews.length}</span></h2>
       <ul className="reviews__list" data-testid="reviews-list">
-        {guestReview.slice(0,10).map((rev) =>
+        {guestReviews.slice(0,10).map((rev) =>
           (
             <Review key = {rev.id} guestReview={rev}/>
           ))}

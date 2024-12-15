@@ -1,6 +1,6 @@
 import {City} from '../types/points.ts';
 
-export const CITY: City[] = [
+export const CITIES: City[] = [
   {
     title: 'Paris',
     lat:48.8534,

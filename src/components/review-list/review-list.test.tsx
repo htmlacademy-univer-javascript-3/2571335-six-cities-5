@@ -8,7 +8,7 @@ describe('Component: Loading page', () => {
     const reviewListTestId = 'reviews-list';
     const expectedText = /Reviews/i;
 
-    render(<ReviewList guestReview={mockCommentList}/>);
+    render(<ReviewList guestReviews={mockCommentList}/>);
 
     const reviewList = screen.getByTestId(reviewListTestId);
 
