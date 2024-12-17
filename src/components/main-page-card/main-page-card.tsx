@@ -91,7 +91,7 @@ function MainPageCard({ offer, onListItemHover, isMainPage, onFavouriteClick}: M
         >
           <Link to={`/offer/${offer.id}`}>{offer.title}</Link>
         </h2>
-        <p className="place-card__type">{offer.type}</p>
+        <p className="place-card__type">{offer.type.charAt(0).toUpperCase() + offer.type.slice(1)}</p>
       </div>
     </article>
 

@@ -6,14 +6,13 @@ import 'leaflet/dist/leaflet.css';
 import useMap from '../../hooks/use-map.tsx';
 import {City} from '../../types/points.ts';
 import { OfferDescription } from '../../types/offer-description.ts';
+import { useAppSelector } from '../../hooks/index.ts';
+import { getOffer } from '../../store/selectors.ts';
 
 
 type MapProps = {
   city: City;
-  height:number;
-  width:number;
   offerList:OfferDescription[];
-  selectedOffer:OfferDescription;
 };
 
 const defaultCustomIcon = new Icon({
@@ -30,9 +29,10 @@ const currentCustomIcon = new Icon({
 
 function Map(props: MapProps): JSX.Element {
 
-  const {city,height, width, offerList, selectedOffer} = props;
+  const {city, offerList} = props;
   const mapRef = useRef(null);
   const map = useMap(mapRef, city);
+  const currentOffer = useAppSelector(getOffer);
 
   useEffect(() => {
     let isMounted = true;
@@ -48,7 +48,7 @@ function Map(props: MapProps): JSX.Element {
 
           marker
             .setIcon(
-              selectedOffer !== undefined && point.id === selectedOffer.id
+              currentOffer !== undefined && point.id === currentOffer.id
                 ? currentCustomIcon
                 : defaultCustomIcon
             )
@@ -60,9 +60,9 @@ function Map(props: MapProps): JSX.Element {
         };
       }
     }
-  }, [map, offerList, selectedOffer, city.zoom, city.lat, city.lng]);
+  }, [map, offerList, currentOffer, city.zoom, city.lat, city.lng]);
 
-  return <div style={{ height: `${height}px`, width: `${width}px`, margin: '0 auto' }} ref={mapRef} data-testid = 'map-test'></div>;
+  return <div style={{ height: `${100}%`, width: `${100}%`, margin: '0 auto' }} ref={mapRef} data-testid = 'map-test'></div>;
 }
 
 export default React.memo(Map);

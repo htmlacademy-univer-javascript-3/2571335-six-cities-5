@@ -16,16 +16,13 @@ describe('Map Component', () => {
     render(
       <Map
         city={CITIES[0]}
-        height={500}
-        width={800}
         offerList={mockOfferList}
-        selectedOffer={mockOfferList[0]}
       />
     );
 
     const mapContainer = screen.getByTestId('map-test');
     expect(mapContainer).toBeInTheDocument();
-    expect(mapContainer).toHaveStyle({ height: '500px', width: '800px' });
+    expect(mapContainer).toHaveStyle({ height: '100%', width: '100%' });
   });
 
 });

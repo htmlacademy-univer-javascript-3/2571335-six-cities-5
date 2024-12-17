@@ -2,6 +2,7 @@ import React from 'react';
 import { Comment } from '../../types/comment.ts';
 
 function Review({guestReview}:{guestReview:Comment}){
+  const date = new Date(guestReview.date);
   return (
     <li key={guestReview.id} className="reviews__item">
       <div className="reviews__user user" data-testid="user-info">
@@ -29,7 +30,7 @@ function Review({guestReview}:{guestReview:Comment}){
           {guestReview.comment}
         </p>
         <time className="reviews__time" dateTime="2019-04-24" data-testid="review-time">
-          {guestReview.date}
+          {date.toLocaleDateString('en-US',{month: 'long', year:'numeric'})}
         </time>
       </div>
     </li>
