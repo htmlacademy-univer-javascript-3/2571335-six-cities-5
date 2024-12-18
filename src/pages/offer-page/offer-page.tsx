@@ -109,7 +109,7 @@ function OfferPage({ offer, offerList, city, onFavouriteClick}: {offer:OfferIdDe
               </div>
               <ul className="offer__features">
                 <li className="offer__feature offer__feature--entire">
-                  {offer.type}
+                  {offer.type.charAt(0).toUpperCase() + offer.type.slice(1)}
                 </li>
                 <li className="offer__feature offer__feature--entire">
                   {offer.bedrooms} Bedrooms
@@ -161,13 +161,11 @@ function OfferPage({ offer, offerList, city, onFavouriteClick}: {offer:OfferIdDe
 
             </div>
           </div>
-          <section className="offer__map map" data-testid = "map">
+          <section className="offer__map map" data-testid = "map" style = {{width : '80%', marginLeft: '10%'}}>
             <Map
               city={CITIES.filter((c) => c.title === city)[0]}
-              selectedOffer={offerList.filter((i) => i.id === offer?.id)[0] }
-              height={579}
-              width={1144}
               offerList={nearOffers.slice(0,3).concat(offerList.filter((i) => i.id === offer.id))}
+              selectedOffer={offerList.filter((i) => i.id === offer.id)[0]}
             />
           </section>
         </section>

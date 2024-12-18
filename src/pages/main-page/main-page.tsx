@@ -22,8 +22,7 @@ function MainPage({ offerList }: { offerList: OfferDescription[] }): JSX.Element
   const sortedOffers = useFilter(offerList, selectedFilter);
 
   const city = useMemo(() => CITIES.filter((c) => c.title === cityName)[0],[cityName]);
-  const offerListMap = useMemo(() => offerList,[offerList]);
-  const selectedOffer = useMemo(() => offerList.filter((i) => i.id === selectedPoint?.id)[0],[selectedPoint, offerList]);
+  const offerListMap = useMemo(() => offerList.filter((offer) => offer.city.name === city.title),[offerList, city]);
   const sortedOffersMemo = useMemo(() => sortedOffers, [sortedOffers]);
   const authStatusMemo = useMemo(() => authStatus, [authStatus]);
   const userEmailMemo = useMemo(() => userEmail, [userEmail]);
@@ -69,10 +68,8 @@ function MainPage({ offerList }: { offerList: OfferDescription[] }): JSX.Element
               <section className="cities__map map">
                 <Map
                   city={city}
-                  selectedOffer={selectedOffer}
                   offerList={offerListMap}
-                  height={850}
-                  width={512}
+                  selectedOffer={selectedPoint}
                 />
               </section>
             </div>
