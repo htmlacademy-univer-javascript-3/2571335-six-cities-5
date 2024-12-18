@@ -69,6 +69,7 @@ function MainPage({ offerList }: { offerList: OfferDescription[] }): JSX.Element
                 <Map
                   city={city}
                   offerList={offerListMap}
+                  selectedOffer={selectedPoint}
                 />
               </section>
             </div>

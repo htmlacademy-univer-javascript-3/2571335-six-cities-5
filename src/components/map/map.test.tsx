@@ -15,6 +15,7 @@ describe('Map Component', () => {
   it('renders a map container with the correct dimensions', () => {
     render(
       <Map
+        selectedOffer={mockOfferList[0]}
         city={CITIES[0]}
         offerList={mockOfferList}
       />

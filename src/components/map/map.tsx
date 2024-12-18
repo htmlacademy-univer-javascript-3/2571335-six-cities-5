@@ -6,13 +6,12 @@ import 'leaflet/dist/leaflet.css';
 import useMap from '../../hooks/use-map.tsx';
 import {City} from '../../types/points.ts';
 import { OfferDescription } from '../../types/offer-description.ts';
-import { useAppSelector } from '../../hooks/index.ts';
-import { getOffer } from '../../store/selectors.ts';
 
 
 type MapProps = {
   city: City;
   offerList:OfferDescription[];
+  selectedOffer:OfferDescription | undefined;
 };
 
 const defaultCustomIcon = new Icon({
@@ -29,10 +28,9 @@ const currentCustomIcon = new Icon({
 
 function Map(props: MapProps): JSX.Element {
 
-  const {city, offerList} = props;
+  const {city, offerList, selectedOffer} = props;
   const mapRef = useRef(null);
   const map = useMap(mapRef, city);
-  const currentOffer = useAppSelector(getOffer);
 
   useEffect(() => {
     let isMounted = true;
@@ -48,7 +46,7 @@ function Map(props: MapProps): JSX.Element {
 
           marker
             .setIcon(
-              currentOffer !== undefined && point.id === currentOffer.id
+              selectedOffer !== undefined && point.id === selectedOffer.id
                 ? currentCustomIcon
                 : defaultCustomIcon
             )
@@ -60,8 +58,34 @@ function Map(props: MapProps): JSX.Element {
         };
       }
     }
-  }, [map, offerList, currentOffer, city.zoom, city.lat, city.lng]);
+  }, [map, offerList, city.zoom, city.lat, city.lng]);
 
+  useEffect(() => {
+    let isMounted = true;
+    if (isMounted){
+      if (map) {
+        const markerLayer = layerGroup().addTo(map);
+        offerList.forEach((point) => {
+          const marker = new Marker({
+            lat: point.location.latitude,
+            lng: point.location.longitude
+          });
+
+          marker
+            .setIcon(
+              selectedOffer !== undefined && point.id === selectedOffer.id
+                ? currentCustomIcon
+                : defaultCustomIcon
+            )
+            .addTo(markerLayer);
+        });
+        return () => {
+          map.removeLayer(markerLayer);
+          isMounted = false;
+        };
+      }
+    }
+  }, [map, offerList, selectedOffer, city.zoom, city.lat, city.lng]);
   return <div style={{ height: `${100}%`, width: `${100}%`, margin: '0 auto' }} ref={mapRef} data-testid = 'map-test'></div>;
 }
 

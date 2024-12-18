@@ -165,6 +165,7 @@ function OfferPage({ offer, offerList, city, onFavouriteClick}: {offer:OfferIdDe
             <Map
               city={CITIES.filter((c) => c.title === city)[0]}
               offerList={nearOffers.slice(0,3).concat(offerList.filter((i) => i.id === offer.id))}
+              selectedOffer={offerList.filter((i) => i.id === offer.id)[0]}
             />
           </section>
         </section>
