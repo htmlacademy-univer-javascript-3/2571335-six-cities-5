@@ -22,7 +22,7 @@ function MainPage({ offerList }: { offerList: OfferDescription[] }): JSX.Element
   const sortedOffers = useFilter(offerList, selectedFilter);
 
   const city = useMemo(() => CITIES.filter((c) => c.title === cityName)[0],[cityName]);
-  const offerListMap = useMemo(() => offerList,[offerList]);
+  const offerListMap = useMemo(() => offerList.filter((offer) => offer.city.name === city.title),[offerList, city]);
   const sortedOffersMemo = useMemo(() => sortedOffers, [sortedOffers]);
   const authStatusMemo = useMemo(() => authStatus, [authStatus]);
   const userEmailMemo = useMemo(() => userEmail, [userEmail]);
