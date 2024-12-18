@@ -1,0 +1,83 @@
+import { useState, useMemo, useCallback } from 'react';
+import OfferList from '../../components/offer-list/offer-list.tsx';
+import Map from '../../components/map/map.tsx';
+import { useAppSelector } from '../../hooks';
+import { CITIES } from '../../mocks/city.ts';
+import CityList from '../../components/city-list/city-list.tsx';
+import { OfferDescription } from '../../types/offer-description.ts';
+import SortFilter from '../../components/sort-filter/sort-filter.tsx';
+import { FILTERS } from '../../mocks/filter';
+import UserHeaderInfo from '../../components/user-info-header/user-info-header.tsx';
+import { useFilter } from '../../hooks/use-filter.ts';
+import { getAuthorizationStatus, getCity, getUserEmail } from '../../store/selectors.ts';
+
+function MainPage({ offerList }: { offerList: OfferDescription[] }): JSX.Element {
+
+  const [selectedPoint, setSelectedPoint] = useState<OfferDescription | undefined>(undefined);
+  const [selectedFilter, setFilter] = useState<string>(FILTERS[0]);
+
+  const cityName = useAppSelector(getCity);
+  const authStatus = useAppSelector(getAuthorizationStatus);
+  const userEmail = useAppSelector(getUserEmail);
+  const sortedOffers = useFilter(offerList, selectedFilter);
+
+  const city = useMemo(() => CITIES.filter((c) => c.title === cityName)[0],[cityName]);
+  const offerListMap = useMemo(() => offerList.filter((offer) => offer.city.name === city.title),[offerList, city]);
+  const sortedOffersMemo = useMemo(() => sortedOffers, [sortedOffers]);
+  const authStatusMemo = useMemo(() => authStatus, [authStatus]);
+  const userEmailMemo = useMemo(() => userEmail, [userEmail]);
+  const selectedFilterMemo = useMemo(() => selectedFilter,[selectedFilter]);
+
+
+  const handleListItemHover = useCallback((listItemId: string) => {
+    const currentPoint = offerList.find((point) => point.id === listItemId);
+    if (currentPoint !== selectedPoint) {
+      setSelectedPoint(currentPoint);
+    }
+  },[offerList, selectedPoint]);
+
+  const handleFilterEnter = useCallback((filter: string) => {
+    if (filter !== selectedFilter) {
+      setFilter(filter);
+    }
+  },[selectedFilter]);
+  return (
+    <div className="page page--gray page--main">
+      <UserHeaderInfo authStatus={authStatusMemo} userEmail={userEmailMemo}/>
+
+      <main className="page__main page__main--index">
+        <h1 className="visually-hidden">Cities</h1>
+        <div className="tabs">
+          <section className="locations container" data-testid = 'citylist'>
+            <CityList/>
+          </section>
+        </div>
+        <div className="cities">
+          <div className="cities__places-container container">
+            <section className="cities__places places">
+              <h2 className="visually-hidden">Places</h2>
+              <b className="places__found">{offerList.filter((i)=> i.city.name === cityName).length} places to stay in {cityName}</b>
+              <form className="places__sorting" action="#" method="get" data-testid = 'filter-form'>
+                <SortFilter filter={selectedFilterMemo} handleFilterEnter={handleFilterEnter} />
+              </form>
+              <div className="cities__places-list places__list tabs__content">
+                <OfferList offer={sortedOffersMemo} onListItemHover={handleListItemHover} isMainPage city={cityName}/>
+              </div>
+            </section>
+            <div className="cities__right-section">
+              <section className="cities__map map">
+                <Map
+                  city={city}
+                  offerList={offerListMap}
+                  selectedOffer={selectedPoint}
+                />
+              </section>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+  );
+}
+
+export default (MainPage);

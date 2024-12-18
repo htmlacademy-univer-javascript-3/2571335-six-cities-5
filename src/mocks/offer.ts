@@ -1,4 +1,4 @@
-import {OfferIdDescription} from '../types/offerDescription';
+import {OfferIdDescription} from '../types/offer-description.ts';
 
 export const emptyOffer : OfferIdDescription = {
   id:'0',

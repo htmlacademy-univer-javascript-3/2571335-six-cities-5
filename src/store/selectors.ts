@@ -1,18 +1,20 @@
 
 import {State} from './index.ts';
-import { AuthorizationStatus } from '../mocks/login';
-import { NAMESPACE } from '../mocks/sliceHeaders';
-import { OfferDescription, OfferIdDescription } from '../types/offerDescription.ts';
+import { AuthorizationStatus } from '../mocks/login.ts';
+import { NAMESPACE } from '../mocks/slice-headers.ts';
+import { OfferDescription, OfferIdDescription } from '../types/offer-description.ts';
 import { CommentList } from '../types/comment.ts';
 
-export const getAuthorizationStatus = (state: State): AuthorizationStatus => state[NAMESPACE.USER].authorizationStatus;
-export const getUserEmail = (state : State) : string => state[NAMESPACE.USER].userEmail;
-export const getOfferList = (state : State) : OfferDescription[] => state[NAMESPACE.DATA].offerlist;
-export const getComments = (state : State) : CommentList => state[NAMESPACE.DATA].comments;
-export const getOffer = (state : State) : OfferIdDescription => state[NAMESPACE.DATA].offer;
-export const offerIsLoadingStatus = (state : State) : boolean => state[NAMESPACE.DATA].isOffersLoading;
-const userDataIsLoading = (state : State) : boolean => state[NAMESPACE.USER].isUserDataLoading;
+export const getCity = (state : Pick<State, NAMESPACE.CITY>) : string => state[NAMESPACE.CITY].city;
+
+export const getAuthorizationStatus = (state: Pick<State, NAMESPACE.USER>): AuthorizationStatus => state[NAMESPACE.USER].authorizationStatus;
+const userDataIsLoading = (state : Pick<State,NAMESPACE.USER>) : boolean => state[NAMESPACE.USER].isUserDataLoading;
+export const getUserEmail = (state : Pick<State, NAMESPACE.USER>) : string => state[NAMESPACE.USER].userEmail;
+
+export const getOfferList = (state : Pick<State, NAMESPACE.DATA>) : OfferDescription[] => state[NAMESPACE.DATA].offerlist;
+export const getComments = (state : Pick<State, NAMESPACE.DATA>) : CommentList => state[NAMESPACE.DATA].comments;
+export const getOffer = (state : Pick<State, NAMESPACE.DATA>) : OfferIdDescription => state[NAMESPACE.DATA].offer;
+export const offerIsLoadingStatus = (state : Pick<State, NAMESPACE.DATA>) : boolean => state[NAMESPACE.DATA].isOffersLoading;
+export const getOffersNearby = (state : Pick<State, NAMESPACE.DATA>) : OfferDescription[] => state[NAMESPACE.DATA].nearbyOffers;
+export const getFavourites = (state: Pick<State, NAMESPACE.DATA>) : OfferDescription[] => state[NAMESPACE.DATA].favouriteList;
 export const isLoading = offerIsLoadingStatus || userDataIsLoading;
-export const getCity = (state : State) : string => state[NAMESPACE.CITY].city;
-export const getOffersNearby = (state : State) : OfferDescription[] => state[NAMESPACE.DATA].nearbyOffers;
-export const getFavourites = (state:State) : OfferDescription[] => state[NAMESPACE.DATA].favouriteList;

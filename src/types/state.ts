@@ -1,8 +1,8 @@
 import { AuthorizationStatus } from '../mocks/login.js';
 import {store} from '../store/index.js';
 import { CommentList } from './comment.js';
-import { OfferDescription } from './offerDescription.js';
-import { OfferIdDescription } from './offerDescription.js';
+import { OfferDescription } from './offer-description.js';
+import { OfferIdDescription } from './offer-description.js';
 
 export type State = ReturnType<typeof store.getState>;
 

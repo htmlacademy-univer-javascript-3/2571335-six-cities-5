@@ -1,0 +1,39 @@
+import React from 'react';
+import { Comment } from '../../types/comment.ts';
+
+function Review({guestReview}:{guestReview:Comment}){
+  const date = new Date(guestReview.date);
+  return (
+    <li key={guestReview.id} className="reviews__item">
+      <div className="reviews__user user" data-testid="user-info">
+        <div className="reviews__avatar-wrapper user__avatar-wrapper" data-testid="user-image">
+          <img
+            className="reviews__avatar user__avatar"
+            src={guestReview.user.avatarUrl}
+            width="54"
+            height="54"
+            alt="Reviews avatar"
+          />
+        </div>
+        <span className="reviews__user-name">
+          {guestReview.user.name}
+        </span>
+      </div>
+      <div className="reviews__info">
+        <div className="reviews__rating rating" data-testid="review-raitings">
+          <div className="reviews__stars rating__stars">
+            <span style={{width: `${(guestReview.rating / 5) * 100}%`}}></span>
+            <span className="visually-hidden">Rating</span>
+          </div>
+        </div>
+        <p className="reviews__text">
+          {guestReview.comment}
+        </p>
+        <time className="reviews__time" dateTime="2019-04-24" data-testid="review-time">
+          {date.toLocaleDateString('en-US',{month: 'long', year:'numeric'})}
+        </time>
+      </div>
+    </li>
+  );
+}
+export default React.memo(Review);
